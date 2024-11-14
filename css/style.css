@@ -1,0 +1,132 @@
+nav {
+    margin: 0;
+    margin-top: 10px;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: aliceblue;
+    border-radius: 10px;
+    height: 23%;
+    width: 100%;
+    display: flex;
+    justify-items: center;
+    justify-content: space-between;
+    text-align: center;
+    border: 1px solid black;
+}
+
+body {
+
+    background-color: rgb(88, 88, 202);
+}
+
+nav a {
+    margin-top: 4px;
+    position: relative;
+    display: inline-block;
+    font-weight: 400;
+    color: black;
+    text-decoration: none;
+    padding: 12px 30px;
+    background-color: aliceblue;
+    border-radius: 20px;
+    font-size: 18px;
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+
+nav a:hover {
+    color: aliceblue;
+    background-color: black;
+}
+
+
+nav a:active {
+    color: aliceblue;
+    background-color: #003366;
+}
+
+li {
+    list-style-type: none;
+    padding-left: 70px;
+    padding-right: 70px;
+    font-size: larger;
+}
+
+#LogoEncab {
+    margin-top: 10px;
+    position: relative;
+    display: inline-block;
+    color: black;
+    padding: 0 23px;
+    text-decoration: solid;
+    font-size: 130%;
+}
+
+main {
+    background-color: rgba(0, 0, 0, 0.248);
+    border-radius: 10px;
+
+
+}
+
+.ContenedorArti {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+
+.Articulo {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.29);
+    overflow: hidden;
+
+}
+
+
+
+.ImagenArti img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 2px solid #ddd;
+
+}
+
+
+.Articulo h3 {
+    font-size: 1.2em;
+    color: #333;
+    padding: 15px;
+    text-align: center;
+    font-weight: 500;
+}
+
+
+#EncabSecunda {
+    text-align: center;
+    font-size: 2em;
+    margin-bottom: 30px;
+    color: #ffffff;
+}
+
+footer {
+    margin: 0;
+    margin-top: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: aliceblue;
+    border-radius: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    border: 1px solid black;
+    font-size: 16px;
+}
