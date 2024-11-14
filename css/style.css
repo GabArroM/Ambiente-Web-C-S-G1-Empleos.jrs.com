@@ -63,9 +63,9 @@ li {
 }
 
 main {
-    background-color: rgba(0, 0, 0, 0.248);
+    background-color: aliceblue;
     border-radius: 10px;
-
+    border: 1px solid black;
 
 }
 
@@ -85,6 +85,7 @@ main {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.29);
     overflow: hidden;
+    
 
 }
 
@@ -112,7 +113,7 @@ main {
     text-align: center;
     font-size: 2em;
     margin-bottom: 30px;
-    color: #ffffff;
+    color: #000000;
 }
 
 footer {
