@@ -1,4 +1,3 @@
-/* Estilos generales */
 body {
     font-family: Arial, sans-serif;
     background-color: rgb(88, 88, 202);
@@ -47,10 +46,10 @@ main {
     padding: 20px;
 }
 
-/* Apartado de registro */
+
 .registroSolicitante {
-    text-align: center; 
-    margin-top: 50px; 
+    text-align: center;
+    margin-top: 50px;
 }
 
 .registroSolicitante p {
@@ -67,7 +66,7 @@ main {
     background-color: #041c36;
 }
 
-/* Perfil Solicitante */
+
 .perfilSolicitante {
     background-color: aliceblue;
     padding: 20px;
@@ -119,7 +118,7 @@ main {
     border-radius: 5px;
 }
 
-/* Estilos para el campo de adjuntar CV */
+
 .dropdown-content input[type="file"] {
     padding: 10px;
     margin-top: 10px;
@@ -128,7 +127,7 @@ main {
     border-radius: 5px;
 }
 
-/* Postulaciones */
+
 .postulaciones {
     background-color: aliceblue;
     padding: 20px;
@@ -145,7 +144,7 @@ main {
     padding: 5px;
 }
 
-/* Seguimiento de Estadísticas */
+
 .estadisticas {
     background-color: aliceblue;
     padding: 20px;
@@ -160,7 +159,7 @@ main {
     text-align: center;
 }
 
-/* Búsqueda de Empleo */
+
 .busquedaEmpleo {
     background-color: aliceblue;
     padding: 20px;
@@ -175,7 +174,7 @@ main {
     text-align: center;
 }
 
-/* Footer */
+
 footer {
     padding: 20px;
     text-align: center;

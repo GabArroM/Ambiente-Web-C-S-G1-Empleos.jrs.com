@@ -6,6 +6,7 @@
     <title>Modulo Empleados</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/ModEmpleados.css">
 
 </head>
 
@@ -21,7 +22,74 @@
         </li>
 
     </nav>
+    <main>
 
+        <section class="form-section">
+            <h2 class="section-title">Crear Propuesta de Trabajo</h2>
+            <form id="jobProposalForm">
+                <div class="form-group">
+                    <label for="jobTitle">Título del Puesto:</label>
+                    <input type="text" id="jobTitle" name="jobTitle" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="jobDescription">Descripción del Puesto:</label>
+                    <textarea id="jobDescription" name="jobDescription" rows="4" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="requirements">Requisitos:</label>
+                    <textarea id="requirements" name="requirements" rows="3" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="salary">Salario:</label>
+                    <input type="text" id="salary" name="salary" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="location">Ubicación:</label>
+                    <input type="text" id="location" name="location" required>
+                </div>
+
+                <button type="submit" class="submit-btn">Publicar Oferta</button>
+            </form>
+        </section>
+
+
+        <section class="form-section">
+            <h2 class="section-title">Gestionar Ofertas de Trabajo</h2>
+
+            <div class="job-listings">
+
+                <div class="job-card">
+                    <h3>Desarrollador Frontend</h3>
+                    <p><strong>Ubicación:</strong> San Jose</p>
+                    <p><strong>Salario:</strong> $1,300 - $1,500</p>
+                    <p><strong>Estado:</strong> Activa</p>
+                    <button class="submit-btn">Editar</button>
+                    <button class="submit-btn" style="background-color: #dc3545;">Eliminar</button>
+                </div>
+
+                <div class="job-card">
+                    <h3>Diseñador UX/UI</h3>
+                    <p><strong>Ubicación:</strong> Heredia</p>
+                    <p><strong>Salario:</strong> $1200 - $1,400</p>
+                    <p><strong>Estado:</strong> Activa</p>
+                    <button class="submit-btn">Editar</button>
+                    <button class="submit-btn" style="background-color: #dc3545;">Eliminar</button>
+                </div>
+                <div class="job-card">
+                    <h3>Desarrollador Web</h3>
+                    <p><strong>Ubicación:</strong> Cartago</p>
+                    <p><strong>Salario:</strong> $1600 - $1,800</p>
+                    <p><strong>Estado:</strong> Activa</p>
+                    <button class="submit-btn">Editar</button>
+                    <button class="submit-btn" style="background-color: #dc3545;">Eliminar</button>
+                </div>
+            </div>
+        </section>
+    </main>
     <br>
     <footer>
         Derechos reservados Grupo#1
