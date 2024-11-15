@@ -1,0 +1,186 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    background-color: rgb(88, 88, 202);
+    color: black;
+}
+
+nav {
+    margin: 0;
+    margin-top: 10px;
+    padding: 0;
+    background-color: aliceblue;
+    border-radius: 10px;
+    height: 23%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    border: 1px solid black;
+}
+
+nav a {
+    color: black;
+    text-decoration: none;
+    padding: 12px 30px;
+    background-color: aliceblue;
+    border-radius: 20px;
+    font-size: 18px;
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+nav a:hover {
+    color: aliceblue;
+    background-color: black;
+}
+
+#LogoEncab {
+    margin-top: 10px;
+    display: inline-block;
+    color: black;
+    text-decoration: solid;
+    font-size: 130%;
+}
+
+main {
+    padding: 20px;
+}
+
+/* Apartado de registro */
+.registroSolicitante {
+    text-align: center; 
+    margin-top: 50px; 
+}
+
+.registroSolicitante p {
+    font-size: 18px;
+}
+
+.registroSolicitante a {
+    color: #010c17;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.registroSolicitante button:hover {
+    background-color: #041c36;
+}
+
+/* Perfil Solicitante */
+.perfilSolicitante {
+    background-color: aliceblue;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.perfilSolicitante h2 {
+    text-align: center;
+}
+
+.dropdown {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.dropbtn {
+    padding: 10px 20px;
+    background-color: #010c17;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.dropbtn:hover {
+    background-color: #041c36;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 200px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    padding: 10px;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Estilos para el campo de adjuntar CV */
+.dropdown-content input[type="file"] {
+    padding: 10px;
+    margin-top: 10px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Postulaciones */
+.postulaciones {
+    background-color: aliceblue;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.postulaciones .dropdown-content ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.postulaciones .dropdown-content ul li {
+    padding: 5px;
+}
+
+/* Seguimiento de Estadísticas */
+.estadisticas {
+    background-color: aliceblue;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.boxEstadisticas {
+    padding: 20px;
+    background-color: lightgray;
+    border-radius: 8px;
+    text-align: center;
+}
+
+/* Búsqueda de Empleo */
+.busquedaEmpleo {
+    background-color: aliceblue;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.boxBusqueda {
+    padding: 20px;
+    background-color: lightgray;
+    border-radius: 8px;
+    text-align: center;
+}
+
+/* Footer */
+footer {
+    padding: 20px;
+    text-align: center;
+    background-color: aliceblue;
+    border-radius: 10px;
+    margin-top: 20px;
+    border: 1px solid black;
+}
