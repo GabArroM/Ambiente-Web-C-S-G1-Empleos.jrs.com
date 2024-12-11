@@ -1,152 +1,188 @@
 body {
-    font-family: Arial, sans-serif;
     background-color: rgb(88, 88, 202);
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
-header {
-    background-color: white;
-    color: black;
-    text-align: center;
-    padding: 15px 0; /* Reducido el padding */
-    margin-bottom: 20px;
-    position: relative;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.header-content {
+nav {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: aliceblue;
+    border-radius: 10px;
+    width: 100%;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    text-align: center;
+    border: 1px solid black;
+    padding: 10px 20px;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
 }
 
-.header-content h1 {
-    font-size: 2em; /* Reducido el tamaño de la fuente */
-    margin: 0;
-}
-
-.btn-regreso {
+nav a {
+    margin-top: 4px;
+    position: relative;
     display: inline-block;
-    padding: 12px 30px;
-    background-color: aliceblue;
-    color: black;
-    border: 2px solid black;
-    border-radius: 20px;
-    font-size: 18px;
     font-weight: 400;
+    color: black;
     text-decoration: none;
+    padding: 8px 15px;
+    background-color: aliceblue;
+    border-radius: 20px;
+    font-size: 16px;
     transition: color 0.3s ease, background-color 0.3s ease;
 }
 
-.btn-regreso:hover {
+nav a:hover {
     color: aliceblue;
     background-color: black;
 }
 
-.btn-regreso:active {
-    background-color: #003366;
+nav a:active {
     color: aliceblue;
+    background-color: #003366;
 }
+
+li {
+    list-style-type: none;
+    padding-left: 70px;
+    padding-right: 70px;
+    font-size: larger;
+}
+
+#LogoEncab {
+    margin-top: 10px;
+    position: relative;
+    display: inline-block;
+    color: black;
+    padding: 0 23px;
+    text-decoration: solid;
+    font-size: 130%;
+}
+
+header {
+    background-color: aliceblue;
+    padding: 30px;
+    width: 100%;
+    max-width: 1200px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    margin: 0 auto;
+}
+
+header h1 {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 24px;
+    text-align: center;
+}
+
+header .header-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+header .btn-regreso, header .btn-login {
+    background-color: #010c17;
+    border-radius: 5px;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    margin: 10px;
+}
+
 
 main {
     background-color: aliceblue;
-    padding: 20px;
-    border-radius: 10px;
-    box-sizing: border-box;
-    max-width: 600px;
-    margin: 0 auto;
-    top: 40px;
-    border: 1px solid black;
-}
-
-form {
-    background-color: white;
-    padding: 2rem;
+    padding: 30px;
+    width: 100%;
+    max-width: 500px;
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    margin: 20px auto;
 }
 
-form label {
+.ContenedorInicio {
+    width: 100%;
+}
+
+.ContenedorInicio h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.ContenedorInicio label {
     display: block;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
+    margin-bottom: 5px;
+    text-align: left;
+    color: #555;
 }
 
-form input,
-form select {
-    width: 100%;
-    padding: 0.75rem;
-    margin-bottom: 1.5rem;
+.ContenedorInicio input,
+.ContenedorInicio select {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 15px;
     border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1rem;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-left: 10px;
 }
 
-form button {
+.ContenedorInicio button {
     width: 100%;
-    padding: 0.75rem;
-    background-color: #000a00;
+    padding: 10px;
+    background-color: #010c17;
     color: white;
     border: none;
-    border-radius: 4px;
-    font-size: 1rem;
+    border-radius: 5px;
+    font-size: 16px;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-form button:hover {
-    background-color: #454ea0;
+.ContenedorInicio button:hover {
+    background-color: #041c36;
 }
 
-form button:active {
-    background-color: #000300;
-}
-
-footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 10px 0;
-    margin-top: 40px;
-}
-
-footer p {
-    margin: 0;
+.RegistroLink {
+    margin-top: 10px;
     font-size: 14px;
 }
 
-@media (max-width: 600px) {
-    .header-content {
-        flex-direction: column;
-        align-items: center;
-    }
+.RegistroLink a {
+    color: #041c36;
+    text-decoration: none;
+}
 
-    form {
-        padding: 1rem;
-    }
+.RegistroLink a:hover {
+    text-decoration: underline;
+}
 
-    form input,
-    form button {
-        font-size: 0.9rem;
-    }
-    .notification {
-        padding: 15px;
-        margin: 20px 0;
-        border-radius: 5px;
-        color: white;
-    }
-    
-    .notification.success {
-        background-color: green;
-    }
-    
-    .notification.error {
-        background-color: red;
-    }
-    
-    
+footer {
+    margin: 0;
+    margin-top: 20px;
+    padding: 1px;
+    box-sizing: border-box;
+    background-color: aliceblue;
+    border-radius: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    border: 1px solid black;
+    font-size: 16px;
+}
+
+footer p {
+    color: #555;
+    font-size: 14px;
 }

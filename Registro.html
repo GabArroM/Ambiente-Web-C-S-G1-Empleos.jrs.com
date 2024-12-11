@@ -12,11 +12,12 @@
         <div class="header-content">
             <h1>Registro de Usuario</h1>
             <a href="index.html" class="btn-regreso">Volver al Inicio</a>
+            <a href="Autenticarse.html" class="btn-login">Iniciar Sesión</a>
         </div>
     </header>
     
     <main>
-        <div class="ContedorInicio">
+        <div class="ContenedorInicio">
             <div id="notification"></div> 
             
             <form id="registroForm">
@@ -48,7 +49,7 @@
         document.getElementById('registroForm').addEventListener('submit', function(event) {
             event.preventDefault(); 
             
-            const formData = new FormData(this); // 
+            const formData = new FormData(this); 
 
             fetch('registro.php', {
                 method: 'POST',
