@@ -11,16 +11,7 @@
 
 <body>
 
-    <nav>
-        <h1 id="LogoEncab">Empleos.jrs.com</h1>
-        <li>
-            <a href="index.html">Inicio</a>
-            <a href="ModEmpleados.html">Modulo Empleados</a>
-            <a href="ModSolicitantes.html">Modulo Solicitantes</a>
-            <a href="Autenticarse.html">Autententicarse</a>
-        </li>
-
-    </nav>
+    <?php include("nav.php") ?>
 
 
     <br>

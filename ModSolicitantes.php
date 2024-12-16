@@ -10,21 +10,10 @@
 </head>
 
 <body>
-    <nav>
-        <h1 id="LogoEncab">Empleos.jrs.com</h1>
-        <li>
-            <a href="index.html">Inicio</a>
-            <a href="ModEmpleados.html">Modulo Empleados</a>
-            <a href="ModSolicitantes.html">Modulo Solicitantes</a>
-            <a href="Autenticarse.html">Autenticar</a>
-        </li>
-    </nav>
+<?php include("nav.php") ?>
 
     <main>
-        <section class="registroSolicitante">
-            <h2>Registro</h2>
-            <p>¿Aún no tienes cuenta? <a href="Autenticarse.html">Regístrate aquí</a></p>
-        </section>
+
 
         <section class="perfilSolicitante">
             <h2>Creación de Perfil Solicitante</h2>

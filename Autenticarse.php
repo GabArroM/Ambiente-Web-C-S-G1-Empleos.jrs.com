@@ -12,19 +12,15 @@
 <body>
 
     <nav>
-        <h1 id="LogoEncab">Empleos.jrs.com</h1>
-        <li>
-            <a href="index.html">Inicio</a>
-            <a href="ModEmpleados.html">Modulo Empleados</a>
-            <a href="ModSolicitantes.html">Modulo Solicitantes</a>
-            <a href="Autenticarse.html">Autenticar</a>
-        </li>
+        
+        <?php include("nav.php") ?>
     </nav>
 
     <br>
     <div class="ContedorInicio">
         <h2>Iniciar Sesión</h2>
-
+        
+        <form  method="post"></form>
         <label for="email">Correo Electrónico</label>
         <input type="email" id="email" name="email" required placeholder="Ingresa tu correo">
 
@@ -34,7 +30,7 @@
         <button id="loginButton">Iniciar Sesión</button>
 
         <div class="RegistroLink">
-            <p>¿No tienes una cuenta? <a href="Registro.html">Regístrate aquí</a></p>
+            <p>¿No tienes una cuenta? <a href="Registro.php">Regístrate aquí</a></p>
         </div>
     </div>
     <br>
@@ -42,7 +38,7 @@
         <p>&copy; 2024 Derechos reservados Grupo#1.</p>
     </footer>
 
-    <script src="js/login.js"></script>
+    <script src="js/Login.js"></script>
 </body>
 
 </html>

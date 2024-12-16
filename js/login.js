@@ -7,7 +7,7 @@ document.getElementById("loginButton").addEventListener("click", function(event)
         alert("Por favor, ingresa tu correo y contraseña.");
         return;
     }
-
+    
     fetch("iniciar_sesion.php", {
         method: "POST",
         headers: {
@@ -18,10 +18,12 @@ document.getElementById("loginButton").addEventListener("click", function(event)
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            if (data.tipoUsuario === "Junior") {
-                window.location.href = "ModSolicitantes.html";
-            } else if (data.tipoUsuario === "Empleador") {
-                window.location.href = "ModEmpleados.html";
+            if (data.tipoUsuario == "Junior") {
+                window.location.href = "ModSolicitantes.php";
+                
+            } else if (data.tipoUsuario == "Empleador") {
+                window.location.href = "ModEmpleados.php";
+                
             }
         } else {
             alert(data.message); 

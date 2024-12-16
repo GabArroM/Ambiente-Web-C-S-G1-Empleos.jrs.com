@@ -1,15 +1,6 @@
 <?php
 // Configuración de conexión a la base de datos
-$servername = "localhost";
-$username = "root";
-$password = "Colon-1289";
-$dbname = "ProyectoWebQ3";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
-}
+include("./Conexion/db.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST["email"];

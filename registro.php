@@ -1,65 +1,76 @@
-<?php
-session_start(); // Inicia la sesión
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <link rel="stylesheet" href="css/Registro.css">
+</head>
+<body>
+    
+    <header>
+        <div class="header-content">
+            <h1>Registro de Usuario</h1>
+            <?php include("nav.php") ?>
+        </div>
+    </header>
+    
+    <main>
+        <div class="ContenedorInicio">
+            <div id="notification"></div> 
+            
+            <form id="registroForm">
+                <label for="nombre">Nombre Completo:</label>
+                <input type="text" id="nombre" name="nombre" required>
+                
+                <label for="email">Correo Electrónico:</label>
+                <input type="email" id="email" name="email" required>
+                
+                <label for="password">Contraseña:</label>
+                <input type="password" id="password" name="password" required>
+                
+                <label for="tipoUsuario">Selecciona tu perfil:</label>
+                <select id="tipoUsuario" name="tipoUsuario" required>
+                    <option value="Junior">Solicitante</option>
+                    <option value="Empleador">Empleador</option>
+                </select>
+                
+                <button type="submit">Registrar</button>
+            </form>
+        </div>
+    </main>
 
-// Habilitar la visualización de errores
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
+    <footer>
+        <p>&copy; 2024 Derechos reservados Grupo#1.</p>
+    </footer>
 
-// Configuración de conexión a la base de datos
-$servername = "localhost"; 
-$username = "root"; 
-$password = "Colon-1289"; 
-$dbname = "ProyectoWebQ3"; 
+    <script>
+        document.getElementById('registroForm').addEventListener('submit', function(event) {
+            event.preventDefault(); 
+            
+            const formData = new FormData(this); 
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+            fetch('registroControl.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json()) 
+            .then(data => {
+                const notification = document.getElementById('notification');
+                
+                if (data.status == 'success') {
+                    notification.innerHTML = `<div class="notification success">${data.message}</div>`;
+                    
+                    
+                } else {
+                    notification.innerHTML = `<div class="notification error">${data.message}</div>`;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
 
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
-}
-
-$response = array('status' => '', 'message' => ''); 
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nombre = $_POST['nombre'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $tipoUsuario = $_POST['tipoUsuario'];
-
-    if (empty($nombre) || empty($email) || empty($password) || empty($tipoUsuario)) {
-        $response['status'] = 'error';
-        $response['message'] = 'Todos los campos son obligatorios.';
-    } else {
-        $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-
-        $sql_check_email = "SELECT * FROM Usuarios WHERE Email = ?";
-        $stmt_check = $conn->prepare($sql_check_email);
-        $stmt_check->bind_param("s", $email);
-        $stmt_check->execute();
-        $result = $stmt_check->get_result();
-
-        if ($result->num_rows > 0) {
-            $response['status'] = 'error';
-            $response['message'] = 'Este correo electrónico ya está registrado.';
-        } else {
-            $sql = "INSERT INTO Usuarios (Nombre, Email, Contraseña, TipoUsuario) VALUES (?, ?, ?, ?)";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("ssss", $nombre, $email, $passwordHash, $tipoUsuario);
-
-            if ($stmt->execute()) {
-                $response['status'] = 'success';
-                $response['message'] = 'Usuario creado exitosamente. Puedes iniciar sesión.';
-            } else {
-                $response['status'] = 'error';
-                $response['message'] = 'Error en el registro: ' . $stmt->error;
-            }
-
-            $stmt->close();
-        }
-    }
-
-    echo json_encode($response);
-    exit();
-}
-
-$conn->close();
-?>
+</body>
+</html>
