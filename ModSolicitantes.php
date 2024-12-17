@@ -10,10 +10,13 @@
 </head>
 
 <body>
-<?php include("nav.php") ?>
+
 
     <main>
-
+    <?php 
+    session_start();
+    include("nav.php")
+     ?>
 
         <section class="perfilSolicitante">
             <h2>Creación de Perfil Solicitante</h2>
