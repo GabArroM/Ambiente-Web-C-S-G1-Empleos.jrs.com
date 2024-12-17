@@ -25,12 +25,11 @@ if(!empty($_SESSION)){
 
 ?>
 <nav>
-<h1 id="LogoEncab">Empleos.jrs.com</h1>
-    
-        <?php
-        foreach ($menu  as $item) { ?>
-            <li ><a href="<?php echo $item["url"] ?>"><?php echo $item["label"] ?></a></li>
+    <h1 id="LogoEncab">Empleos.jrs.com</h1>
+    <ul> 
+        <?php foreach ($menu as $item) { ?>
+            <li><a href="<?php echo $item["url"] ?>"><?php echo $item["label"] ?></a></li>
         <?php } ?>
-    
+    </ul> 
 </nav>
 
