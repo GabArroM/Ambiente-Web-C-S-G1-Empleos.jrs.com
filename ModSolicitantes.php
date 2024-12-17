@@ -6,7 +6,7 @@
     <title>Módulo Solicitantes</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/style.css">
-    <link rel="stylesheet" href="./css/ModSolicitantes.css">
+    <link rel="stylesheet" href="./css/ModSolicitante.css">
 </head>
 
 <body>
@@ -23,15 +23,20 @@
             <div class="dropdown">
                 <button class="dropbtn">Editar Perfil</button>
                 <div class="dropdown-content">
-                    <label for="nombre">Nombre Completo</label>
-                    <input type="text" id="nombre" placeholder="Ingresa tu nombre completo">
-                    <label for="correo">Correo Electrónico</label>
-                    <input type="email" id="correo" placeholder="Ingresa tu correo electrónico">
-                    <label for="telefono">Teléfono</label>
-                    <input type="tel" id="telefono" placeholder="Ingresa tu teléfono">
-                    <label for="cv">Adjuntar CV (PDF, DOCX)</label>
-                    <input type="file" id="cv" accept=".pdf,.docx">
+                    <label for="nombre">Nombre Completo</label><br>
+                    <input type="text" id="nombre" placeholder="Ingresa tu nombre completo"><br>
+                    <label for="correo">Correo Electrónico</label><br>
+                    <input type="email" id="correo" placeholder="Ingresa tu correo electrónico"><br>
+                    <label for="telefono">Teléfono</label><br><br>
+                    <input type="tel" id="telefono" placeholder="Ingresa tu teléfono"><br>
+                    <label for="nombre">Educación</label><br>
+                    <input type="text" id="Educacion" placeholder="Ingresa tu nivel de educación"><br>
+                    <label for="nombre">Habilidades</label><br>
+                    <textarea id="descripcion" name="descripcion" rows="4" cols="50" placeholder="Ingresa tus habilidades" required></textarea><br>
+                    <label for="cv">Adjuntar CV (PDF, DOCX)</label><br>
+                    <input type="file" id="cv" accept=".pdf,.docx"><br>
                     <button type="submit">Actualizar Perfil</button>
+                    <button type="submit">Borrar Perfil</button><br>
                 </div>
             </div>
         </section>
