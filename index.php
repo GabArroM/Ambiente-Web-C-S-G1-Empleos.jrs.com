@@ -5,63 +5,88 @@
     <meta charset="UTF-8">
     <title>INICIO</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/style.css?v=1.3">
 
 </head>
 
 <body>
 
-    <?php include("nav.php") ?>
+    <?php include("navbar.php") ?>
 
 
     <br>
     <main>
-        <h2 id="EncabSecunda">Noticias de la app</h2>
+    <h2 id="EncabSecunda">!Novedades recientes!</h2>
 
-        <div class="ContenedorArti">
+    <div class="ContenedorArti">
 
-            <article class="Articulo">
 
+        <article class="Articulo">
+            <div class="ContenidoArti">
                 <div class="ImagenArti">
-
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXldmjTd0Oaq0emo6s0Wkboh6Tm-0n7pS0Sg&s"
-                        alt="Noticia 1">
+                    <img src="https://cdn.pixabay.com/photo/2019/10/09/07/28/development-4536630_960_720.png "style="max-width: 60%; height: auto;">
                 </div>
+                <div class="TextoArti">
+                    <h3>Nuestro nuevo lanzamiento: disfruta de un mundo de posibilidades para los empleos</h3>
+                    <h6>Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci dignissimos, maiores qui aspernatur numquam 
+                        alias eligendi tenetur esse neque unde, porro illo voluptatem voluptatibus assumenda vitae quod possimus illum? 
+                        Harum.
+                    </h6>
+                </div>
+            </div>
+        </article>
 
-                <h3>Nuestro nuevo lanzamiento: disfruta de un mundo de posibilidades para los empleos</h3>
 
-            </article>
-
-            <article class="Articulo">
-
+        <article class="Articulo reverse">
+            <div class="ContenidoArti">
                 <div class="ImagenArti">
-
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXldmjTd0Oaq0emo6s0Wkboh6Tm-0n7pS0Sg&s"
-                        alt="Noticia 2">
-
+                <img src="https://cdn.pixabay.com/photo/2015/12/04/07/55/logodesign-1076200_1280.png" style="max-width: 60%; height: auto;">
+           
                 </div>
+                <div class="TextoArti">
+                    <h3>Empleos en un Solo Click: Plataforma Web Facilita el Reclutamiento para Freelancers</h3>
+                    <h6>Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci dignissimos, maiores qui aspernatur numquam 
+                        alias eligendi tenetur esse neque unde, porro illo voluptatem voluptatibus assumenda vitae quod possimus illum? 
+                        Harum.
+                    </h6>
+                </div>
+            </div>
+        </article>
 
-                <h3>Empleos en un Solo Click: Plataforma Web Facilita el Reclutamiento para Freelancers</h3>
 
-            </article>
-
-            <article class="Articulo">
+        <article class="Articulo">
+            <div class="ContenidoArti">
                 <div class="ImagenArti">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXldmjTd0Oaq0emo6s0Wkboh6Tm-0n7pS0Sg&s"
-                        alt="Noticia 3">
+                    <img src="https://cdn.pixabay.com/photo/2016/02/07/14/45/smartphone-1184883_640.png"style="max-width: 60%; height: auto;">
                 </div>
-                <h3>Plataforma para Empleos que Ahorra Tiempo y Optimiza el Proceso de Selección</h3>
-            </article>
+                <div class="TextoArti">
+                    <h3>Plataforma para Empleos que Ahorra Tiempo y Optimiza el Proceso de Selección</h3>
+                    <h6>Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci dignissimos, maiores qui aspernatur numquam 
+                        alias eligendi tenetur esse neque unde, porro illo voluptatem voluptatibus assumenda vitae quod possimus illum? 
+                        Harum.
+                    </h6>
+                </div>
+            </div>
+        </article>
 
-            <article class="Articulo">
+
+        <article class="Articulo reverse">
+            <div class="ContenidoArti">
                 <div class="ImagenArti">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT76zV2zGp-CGYkx8zMYwPV4b-u3NkofoD_fA&s"
-                        alt="Noticia 4">
+                    <img src="https://cdn.pixabay.com/photo/2024/09/04/19/11/website-9022660_1280.png" style="max-width: 60%; height: auto;">
                 </div>
-                <h3>La Revolución del Reclutamiento: Nuevas Funciones para Buscar Talento de Manera Eficiente</h3>
-            </article>
-        </div>
-    </main>
+                <div class="TextoArti">
+                    <h3>La Revolución del Reclutamiento: Nuevas Funciones para Buscar Talento de Manera Eficiente</h3>
+                    <h6>Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci dignissimos, maiores qui aspernatur numquam 
+                        alias eligendi tenetur esse neque unde, porro illo voluptatem voluptatibus assumenda vitae quod possimus illum? 
+                        Harum.
+                    </h6>
+                </div>
+            </div>
+        </article>
+    </div>
+</main>
+
 
     <footer>
         Derechos reservados Grupo#1

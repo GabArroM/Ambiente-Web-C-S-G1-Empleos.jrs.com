@@ -4,18 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Módulo Solicitantes</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/style.css">
-    <link rel="stylesheet" href="./css/ModSolicitante.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">   
+    <link rel="stylesheet" href="./css/ModSolicitante.css?v=1.3">
+    <link rel="stylesheet" href="./css/style.css?v=1.4">
 </head>
 
 <body>
-
-
+<?php 
+include("navbar.php");
+include("./Conexion/db.php");
+?>
     <main>
          <?php 
-                include("nav.php");
-                include("./Conexion/db.php");
+                
 
 if (!isset($_SESSION['user_id'])) {
     header('Location: Autenticarse.php'); 

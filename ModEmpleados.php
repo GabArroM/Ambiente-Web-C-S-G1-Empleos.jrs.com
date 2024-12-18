@@ -5,16 +5,19 @@
     <meta charset="UTF-8">
     <title>Modulo Empleados</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/style.css">
-    <link rel="stylesheet" href="./css/ModEmpleados.css">
+    <link rel="stylesheet" href="./css/style.css?v=1.3">
+    <link rel="stylesheet" href="./css/ModEmpleados.css?v=1.3">
 
 </head>
+<body>
+    
+
+<?php 
+include("navbar.php");
+include("./Conexion/db.php");
+?>
 <main>
     <?php
-
-include("./Conexion/db.php");
-include("nav.php");
-
 
 $user_id = $_SESSION['user_id'];
 
@@ -98,7 +101,7 @@ $id_empleador = $result_empleador['id_empleador'];
 <footer>
     Derechos reservados Grupo#1
 </footer>
-
+</body>
 
 
 </html>

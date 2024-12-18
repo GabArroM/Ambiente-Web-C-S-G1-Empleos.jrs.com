@@ -4,22 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro</title>
-    <link rel="stylesheet" href="css/Registro.css">
+    <link rel="stylesheet" href="./css/style.css?v=1.3">
+    <link rel="stylesheet" href="css/Registro.css?v=1.4">
 </head>
 <body>
+    <?php include("navbar.php") ?>
     
-    <header>
-        <div class="header-content">
-            <h1>Registro de Usuario</h1>
-            <?php include("nav.php") ?>
+        <div class="header-content" >
+            
+            
         </div>
-    </header>
+    
     
     <main>
         <div class="ContenedorInicio">
             <div id="notification"></div> 
             
             <form id="registroForm">
+            <h1>Registro de Usuario</h1>
                 <label for="nombre">Nombre Completo:</label>
                 <input type="text" id="nombre" name="nombre" required>
                 
