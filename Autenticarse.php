@@ -11,10 +11,10 @@
 
 <body>
 
-    <nav>
+  
         
         <?php include("nav.php") ?>
-    </nav>
+    
 
     <br>
     <div class="ContedorInicio">

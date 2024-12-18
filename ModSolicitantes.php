@@ -14,7 +14,6 @@
 
     <main>
          <?php 
-                session_start();
                 include("nav.php");
                 include("./Conexion/db.php");
 

@@ -13,8 +13,8 @@
     <?php
 
 include("./Conexion/db.php");
+include("nav.php");
 
-session_start();
 
 $user_id = $_SESSION['user_id'];
 
@@ -27,7 +27,7 @@ $result_empleador = $stmt_empleador->get_result()->fetch_assoc();
 $id_empleador = $result_empleador['id_empleador']; 
 
 
-include("nav.php");
+
 ?>
     <section class="form-section">
         <h2 class="section-title">Crear Propuesta de Trabajo</h2>
