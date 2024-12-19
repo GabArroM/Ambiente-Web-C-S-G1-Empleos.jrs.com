@@ -165,13 +165,6 @@ $perfil = $result->fetch_assoc();
                 <p>Aquí se mostrarán las estadísticas de las postulaciones y empleos aplicados.</p>
             </div>
         </section>
-
-        <section class="busquedaEmpleo">
-            <h2>Búsqueda de Empleo</h2>
-            <div class="boxBusqueda">
-                <p>Aquí podrás buscar empleos disponibles.</p>
-            </div>
-        </section>
     </main>
     <footer>
         Derechos reservados Grupo#1

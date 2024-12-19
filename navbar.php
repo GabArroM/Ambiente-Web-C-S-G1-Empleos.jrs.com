@@ -5,15 +5,16 @@ if(!empty($_SESSION)){
    if($_SESSION["user_type"] == "Junior"){
     $menu = [
         ["label" => "Inicio", "url" => "index.php"],
-        ["url" => "ModSolicitantes.php", "label" => "Modulo Solicitantes"],
         ["url" => "sobreNosotros.php", "label" => "Sobre Nosotros"],
+        ["url" => "BusquedaEmpleo.php", "label" => "Buscar Empleo"],
+        ["url" => "ModSolicitantes.php", "label" => "Perfil"],
         ["url" => "logout.php", "label" => "Salir", "button" => true]
     ];
    } else if($_SESSION["user_type"] == "Empleador"){
     $menu = [
         ["label" => "Inicio", "url" => "index.php"],
-        ["url" => "ModEmpleados.php", "label" => "Modulo Empleados"],
         ["url" => "sobreNosotros.php", "label" => "Sobre Nosotros"],
+        ["url" => "ModEmpleados.php", "label" => "Modulo Empleador"],
         ["url" => "logout.php", "label" => "Salir", "button" => true]
     ];
    } 
