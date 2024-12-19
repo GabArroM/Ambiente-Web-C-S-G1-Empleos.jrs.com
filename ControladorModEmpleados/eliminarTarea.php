@@ -1,19 +1,28 @@
 <?php
-include('../Model/Conexion.php');
+include("../Conexion/db.php");
 
 if (isset($_GET['id'])) {
-    // id de la tarea a eliminar
-    $taskId = $_GET['id'];
+    $idOferta = $_GET['id'];
 
-    
-    $query = "DELETE FROM tareas WHERE id_tarea = '$taskId'";
+    // Consulta para eliminar la oferta
+    $query = "DELETE FROM ofertas_empleo WHERE ID_Oferta = ?";
 
-    
-    if ($conn->query($query) === TRUE) {
-        
-        header('Location: ../View/index.php');  // redirigir
+    if ($stmt = $conn->prepare($query)) {
+        $stmt->bind_param("i", $idOferta);
+
+        if ($stmt->execute()) {
+            header("Location: ModEmpleados.php");  // Redirigir al listado de ofertas
+            exit();
+        } else {
+            echo "Error al eliminar oferta: " . $stmt->error;
+        }
+
+        $stmt->close();
     } else {
-        echo "Error al eliminar tarea: " . $conn->error . "<br>";
+        echo "Error al preparar la consulta: " . $conn->error;
     }
-} 
+} else {
+    echo "ID de oferta no especificado.";
+}
 ?>
+

@@ -7,10 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/style.css?v=1.3">
     <link rel="stylesheet" href="./css/ModEmpleados.css?v=1.3">
-
 </head>
 <body>
-    
 
 <?php 
 include("navbar.php");
@@ -18,26 +16,21 @@ include("./Conexion/db.php");
 ?>
 <main>
     <?php
+    $user_id = $_SESSION['user_id'];
 
-$user_id = $_SESSION['user_id'];
+    $sql_empleador = "SELECT id_empleador FROM empleadores WHERE id_usuario = ?";
+    $stmt_empleador = $conn->prepare($sql_empleador);
+    $stmt_empleador->bind_param("i", $user_id);
+    $stmt_empleador->execute();
+    $result_empleador = $stmt_empleador->get_result()->fetch_assoc(); 
 
-$sql_empleador = "SELECT id_empleador FROM empleadores WHERE id_usuario = ?";
-$stmt_empleador = $conn->prepare($sql_empleador);
-$stmt_empleador->bind_param("i", $user_id);
-$stmt_empleador->execute();
-$result_empleador = $stmt_empleador->get_result()->fetch_assoc(); 
-
-$id_empleador = $result_empleador['id_empleador']; 
-
-
-
-?>
+    $id_empleador = $result_empleador['id_empleador']; 
+    ?>
+    
     <section class="form-section">
         <h2 class="section-title">Crear Propuesta de Trabajo</h2>
         <form method="POST" action="./ControladorModEmpleados/AgregarOferta.php" id="jobProposalForm">
-            
             <input type="hidden" id="id_empleador" name="id_empleador" value="<?php echo $id_empleador; ?>">
-
             <div class="form-group">
                 <label for="titulo">Título:</label>
                 <input type="text" id="titulo" name="titulo" placeholder="Título del Trabajo" required>
@@ -64,44 +57,56 @@ $id_empleador = $result_empleador['id_empleador'];
             <button type="submit" class="submit-btn">Publicar Oferta</button>
         </form>
     </section>
-    <section class="form-section">
-        <h2 class="section-title">Gestionar Ofertas de Trabajo</h2>
-        <div class="job-listings">
-            <?php
-            
-            $sql = "SELECT * FROM ofertas_empleo WHERE id_empleador = ?";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("i", $id_empleador);
-            
 
-            if ($stmt->execute()) {
-                $lista = $stmt->get_result();
-            
-                if ($lista->num_rows > 0) {
-                    while ($row = $lista->fetch_assoc()) {
-                        echo '<div class="job-card">';
-                        echo '<h3>' . htmlspecialchars($row['titulo']) . '</h3>';
-                        echo '<p><strong>Categoría:</strong> ' . htmlspecialchars($row['categoria']) . '</p>';
-                        echo '<p><strong>Salario:</strong> ' . htmlspecialchars($row['rango_salarial']) . '</p>';
-                        echo '<p><strong>Tipo de contrato:</strong> ' . htmlspecialchars($row['tipo_contrato']) . '</p>';
-                        echo '<button class="submit-btn" onclick="window.location.href=\'editar_oferta.php?id=' . $row['id_oferta'] . '\'">Editar</button>';
-                        echo '<button class="submit-btn" style="background-color: #dc3545;" onclick="window.location.href=\'eliminar_oferta.php?id=' . $row['id_oferta'] . '\'">Eliminar</button>';
-                        echo '</div>';
-                    }
-                } else {
-                    echo '<p>No hay ofertas hechas</p>';
-                }
-            } else {
-                echo "Error al ejecutar la consulta: " . $stmt->error;
-            }
-            ?>
-        </div>
-    </section>
+    <section class="offers-list-section">
+    <h2>Ofertas de Trabajo Publicadas</h2>
+    <?php
+    $sql_ofertas = "SELECT * FROM ofertas_empleo";
+    $result_ofertas = $conn->query($sql_ofertas);
+
+    if ($result_ofertas->num_rows > 0) {
+        echo "<table class='offers-table'>
+                <thead>
+                    <tr>
+                        <th>ID</th> <!-- Nueva columna para el ID -->
+                        <th>Título</th>
+                        <th>Descripción</th>
+                        <th>Categoría</th>
+                        <th>Tipo de Contrato</th>
+                        <th>Rango Salarial</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>";
+
+        while ($row = $result_ofertas->fetch_assoc()) {
+            echo "<tr>
+                    <td>" . htmlspecialchars($row['ID_Oferta']) . "</td> 
+                    <td>" . htmlspecialchars($row['Titulo']) . "</td>
+                    <td>" . htmlspecialchars($row['Descripcion']) . "</td>
+                    <td>" . htmlspecialchars($row['Categoria']) . "</td>
+                    <td>" . htmlspecialchars($row['TipoContrato']) . "</td>
+                    <td>" . htmlspecialchars($row['RangoSalarial']) . "</td>
+                    <td>
+                        <a href='ControladorModEmpleados/editarTarea.php?id=" . $row['ID_Oferta'] . "'>Editar</a>
+                        <a href='ControladorModEmpleados/eliminarTarea.php?id=" . $row['ID_Oferta'] . "'>Eliminar</a>
+                    </td>
+                </tr>";
+        }
+        echo "</tbody></table>";
+    } else {
+        echo "<p>No hay ofertas de trabajo disponibles.</p>";
+    }
+
+    // Cerrar la conexión a la base de datos
+    $conn->close();
+    ?>
+</section>
 </main>
+
 <footer>
     Derechos reservados Grupo#1
 </footer>
+
 </body>
-
-
 </html>
