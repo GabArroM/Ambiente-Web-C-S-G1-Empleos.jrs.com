@@ -5,7 +5,7 @@ session_start();
 $menu = [
     ["label" => "Inicio", "url" => "index.php"],
     ["url" => "sobreNosotros.php", "label" => "Sobre Nosotros"],
-    ["label" => "Autententicarse", "url" => "Autenticarse.php"],
+    ["label" => "Autenticarse", "url" => "Autenticarse.php"],
 ];
 
 // Verificar si $_SESSION no está vacío y contiene el índice 'user_type'
