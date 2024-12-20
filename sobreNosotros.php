@@ -18,7 +18,7 @@
     <div class="container">
         <section class="section">
             <h2 class="section-title">Nuestra Misión</h2>
-            <p>Brindamos empleo a personas jóvenes y junior sin experiencia, proporcionando un entorno de aprendizaje y crecimiento profesional. Nuestro objetivo es apoyar el desarrollo de talento emergente, ofreciendo oportunidades para que desarrollen sus habilidades en un entorno dinámico y colaborativo.</p>
+            <p>Brindamos empleo a personas jóvenes y junior sin experiencia, proporcionando un entorno de aprendizaje y crecimiento profesional. Nuestro objetivo es facilitar el ingreso al mercado laboral para todas las personas, las cuales no tienen ninguna experiencia laboral previa, conectándolas con empleadores que buscan realizar diferentes proyectos o tareas específicas con presupuestos ajustados, brindando oportunidades de aprendizaje y generación de ingresos a ambas partes..</p>
         </section>
 
         <section class="section">
