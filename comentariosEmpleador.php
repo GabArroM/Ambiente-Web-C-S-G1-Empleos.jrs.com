@@ -3,7 +3,7 @@ include("navbar.php");
 include("./Conexion/db.php");
 
 if (!isset($_SESSION['user_id'])) {
-    header('Location: Autenticarse.php'); 
+    header('Location: Autenticarse.php');
     exit();
 }
 
@@ -34,8 +34,9 @@ $resultComentarios = mysqli_query($conn, $sqlComentarios);
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comentarios de la Empresa</title>
-    <link rel="stylesheet" href="./css/comentarios.css">
+    <link rel="stylesheet" href="./css/comentarios.css?v=1.2">
     <link rel="stylesheet" href="./css/style.css?v=1.4">
 </head>
 <body>
@@ -59,10 +60,11 @@ $resultComentarios = mysqli_query($conn, $sqlComentarios);
         <?php } ?>
     </section>
 </main>
+
 </body>
 
 <footer>
-        Derechos reservados Grupo#1
-    </footer>
-</html>
+    <p>Derechos reservados Grupo#1</p>
+</footer>
 
+</html>

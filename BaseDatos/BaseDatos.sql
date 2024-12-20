@@ -77,4 +77,28 @@ alter table Aplicaciones
 modify column EstadoAplicacion enum ('Aplicado', 'En revisión', 'Rechazado','Aprobado') not null;
 
 
+drop table Evaluaciones;
+ 
+CREATE TABLE Comentarios (
+    ID_Comentario INT AUTO_INCREMENT PRIMARY KEY,
+    ID_Usuario INT NOT NULL,
+    ID_Empleador INT NOT NULL,
+    Comentario TEXT NOT NULL,
+    FechaComentario TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (ID_Usuario) REFERENCES Usuarios(ID_Usuario),
+    FOREIGN KEY (ID_Empleador) REFERENCES Empleadores(ID_Empleador)
+);
+ 
+ALTER TABLE Comentarios ADD COLUMN ID_PerfilJunior INT;
+ 
+ 
+ALTER TABLE Comentarios
+ADD CONSTRAINT fk_perfilJunior FOREIGN KEY (ID_PerfilJunior) REFERENCES Perfil_Junior(ID_PerfilJunior);
 
+
+ALTER TABLE comentarios
+DROP FOREIGN KEY fk_perfilJunior;
+
+ALTER TABLE comentarios
+ADD CONSTRAINT fk_perfilJunior FOREIGN KEY (ID_PerfilJunior) REFERENCES perfil_junior(ID_PerfilJunior)
+ON DELETE CASCADE; 

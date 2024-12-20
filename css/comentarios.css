@@ -1,8 +1,14 @@
+
+* {
+    box-sizing: border-box;
+}
+
 body {
     background-color: #ffffff;
     font-family: Arial, sans-serif;
     color: #003366;
 }
+
 .comentarios-section {
     width: 80%;
     max-width: 600px;
@@ -12,12 +18,14 @@ body {
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
+
 .comentarios-section h2 {
     text-align: center;
     font-size: 24px;
     margin-bottom: 20px;
     color: #003366;
 }
+
 .comentarios-section p {
     text-align: center;
     font-size: 16px;
@@ -27,18 +35,22 @@ body {
     border-radius: 4px;
     margin-bottom: 20px;
 }
+
 .comentarios-section p.error {
     background-color: #f44336;
 }
+
 form {
     display: flex;
     flex-direction: column;
 }
+
 form label {
     font-size: 16px;
     margin-bottom: 8px;
     color: #555;
 }
+
 form select,
 form textarea {
     font-size: 16px;
@@ -47,34 +59,40 @@ form textarea {
     border: 1px solid #ccc;
     border-radius: 4px;
     width: 100%;
-    box-sizing: border-box;
 }
+
 form button {
     font-size: 16px;
     padding: 12px;
-    background-color: #4CAF50; /* Verde */
+    background-color: #4CAF50; 
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s;
+    width: 100%; 
 }
+
 form button:hover {
-    background-color: #45a049; /* Verde oscuro */
+    background-color: #45a049; 
 }
+
 .comentarios-enviados {
     margin-top: 40px;
 }
+
 .comentarios-enviados h3 {
     font-size: 20px;
     color: #003366;
     margin-bottom: 15px;
     text-align: center;
 }
+
 .comentarios-enviados ul {
     list-style: none;
     padding: 0;
 }
+
 .comentarios-enviados li {
     margin-bottom: 15px;
     padding: 10px;
@@ -82,20 +100,29 @@ form button:hover {
     border-radius: 6px;
     background-color: #f9f9f9;
 }
+
 .comentarios-enviados li strong {
     color: #003366;
     font-size: 16px;
 }
+
 .comentarios-enviados li p {
     font-size: 14px;
     color: #555;
 }
+
 .comentarios-enviados p {
     text-align: center;
     font-size: 16px;
     color: #888;
 }
-.footer{
-    position: absolute;
+
+footer {
+    padding: 1em 0;
+    position: fixed;
     bottom: 0;
+    width: 100%;
+    background-color: #003366;
+    color: white;
+    text-align: center;
 }

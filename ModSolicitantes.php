@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="./css/ModSolicitante.css?v=1.4">
     <link rel="stylesheet" href="./css/style.css?v=1.4">
     <link rel="stylesheet" href="./css/BuscarEmpleo.css?v=1.0">
-
 </head>
 
 <body>
@@ -16,10 +15,9 @@
 include("navbar.php");
 include("./Conexion/db.php");
 ?>
-    <main>
-         <?php 
-                
 
+<main>
+<?php 
 if (!isset($_SESSION['user_id'])) {
     header('Location: Autenticarse.php'); 
     exit();
@@ -28,50 +26,72 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id']; 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // actualizar perfil
     if (isset($_POST['action']) && $_POST['action'] == 'update') {
-        $nombre = $_POST['nombre'];
-        $correo = $_POST['correo'];
-        $telefono = $_POST['telefono'];
-        $educacion = $_POST['educacion'];
-        $descripcion = $_POST['descripcion'];
-        
+        // Limpiar datos para evitar XSS
+        $nombre = htmlspecialchars($_POST['nombre']);
+        $correo = filter_var($_POST['correo'], FILTER_SANITIZE_EMAIL);
+        $telefono = htmlspecialchars($_POST['telefono']);
+        $educacion = htmlspecialchars($_POST['educacion']);
+        $descripcion = htmlspecialchars($_POST['descripcion']);
+
+        $cv_url = NULL; // Inicializar en NULL por defecto
         if ($_FILES['cv']['error'] == UPLOAD_ERR_OK) {
             $file_name = uniqid() . "_" . basename($_FILES['cv']['name']);
             $file_path = "uploads/" . $file_name;
 
-            if (move_uploaded_file($_FILES['cv']['tmp_name'], $file_path)) {
-                $cv_url = $file_path;
+            $file_extension = pathinfo($file_name, PATHINFO_EXTENSION);
+            $allowed_extensions = ['pdf', 'docx'];
+
+            if (in_array(strtolower($file_extension), $allowed_extensions)) {
+                if (move_uploaded_file($_FILES['cv']['tmp_name'], $file_path)) {
+                    $cv_url = $file_path;
+                } else {
+                    echo "Error al subir el archivo.";
+                    exit();
+                }
             } else {
-                echo "Error al subir el archivo.";
+                echo "Archivo no permitido. Debe ser PDF o DOCX.";
                 exit();
             }
-        } else {
-            $cv_url = NULL;  // Si no se sube un archivo, asignar NULL
         }
 
-        $sql_nombre = "UPDATE Usuarios SET Nombre='$nombre' WHERE ID_Usuario='$user_id'";
-        if ($conn->query($sql_nombre) !== TRUE) {
+        // Actualizar nombre
+        $sql_nombre = "UPDATE Usuarios SET Nombre=? WHERE ID_Usuario=?";
+        $stmt = $conn->prepare($sql_nombre);
+        $stmt->bind_param("si", $nombre, $user_id);
+        if (!$stmt->execute()) {
             echo "Error al actualizar nombre: " . $conn->error;
             exit();
         }
 
-        $sql_perfil = "UPDATE Perfil_Junior SET Educacion='$educacion', Habilidades='$descripcion', Telefono='$telefono', CV_URL='$cv_url' WHERE ID_Usuario='$user_id'";
-
-        if ($conn->query($sql_perfil) === TRUE) {
+        // Actualizar perfil
+        $sql_perfil = "UPDATE Perfil_Junior SET Educacion=?, Habilidades=?, Telefono=?, CV_URL=? WHERE ID_Usuario=?";
+        $stmt_perfil = $conn->prepare($sql_perfil);
+        $stmt_perfil->bind_param("ssssi", $educacion, $descripcion, $telefono, $cv_url, $user_id);
+        if ($stmt_perfil->execute()) {
             echo "Perfil actualizado correctamente.";
         } else {
             echo "Error al actualizar perfil: " . $conn->error;
         }
     }
 
-    // Eliminar perfil y usuario
-    if (isset($_POST['action']) && $_POST['action'] == 'delete') {
-        if (isset($_POST['confirm_delete']) && $_POST['confirm_delete'] == 'yes') {
-            $sql = "DELETE FROM Perfil_Junior WHERE ID_Usuario='$user_id'";
-            if ($conn->query($sql) === TRUE) {
-                $sql_user = "DELETE FROM usuarios WHERE ID_Usuario='$user_id'";
-                if ($conn->query($sql_user) === TRUE) {
+    // Eliminar perfil
+    if (isset($_POST['action']) && $_POST['action'] == 'delete' && isset($_POST['confirm_delete']) && $_POST['confirm_delete'] == 'yes') {
+        // Eliminar aplicaciones
+        $sql_aplicaciones = "DELETE FROM Aplicaciones WHERE ID_PerfilJunior = (SELECT ID_PerfilJunior FROM Perfil_Junior WHERE ID_Usuario = ?)";
+        $stmt_aplicaciones = $conn->prepare($sql_aplicaciones);
+        $stmt_aplicaciones->bind_param("i", $user_id);
+        if ($stmt_aplicaciones->execute()) {
+            // Eliminar perfil junior
+            $sql_perfil = "DELETE FROM Perfil_Junior WHERE ID_Usuario=?";
+            $stmt_perfil = $conn->prepare($sql_perfil);
+            $stmt_perfil->bind_param("i", $user_id);
+            if ($stmt_perfil->execute()) {
+                // Eliminar usuario
+                $sql_user = "DELETE FROM Usuarios WHERE ID_Usuario=?";
+                $stmt_user = $conn->prepare($sql_user);
+                $stmt_user->bind_param("i", $user_id);
+                if ($stmt_user->execute()) {
                     session_unset();
                     session_destroy();
                     header('Location: Autenticarse.php');
@@ -82,13 +102,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             } else {
                 echo "Error al eliminar el perfil: " . $conn->error;
             }
+        } else {
+            echo "Error al eliminar las aplicaciones: " . $conn->error;
         }
     }
 }
 
-// Consulta para obtener los datos del perfil
-$sql = "SELECT u.Nombre, u.Email, p.Telefono, p.Educacion, p.Habilidades, p.CV_URL FROM Usuarios u JOIN Perfil_Junior p ON u.ID_Usuario = p.ID_Usuario WHERE u.ID_Usuario='$user_id'";
-$result = $conn->query($sql);
+// Obtener los datos del perfil
+$sql = "SELECT u.Nombre, u.Email, p.Telefono, p.Educacion, p.Habilidades, p.CV_URL FROM Usuarios u JOIN Perfil_Junior p ON u.ID_Usuario = p.ID_Usuario WHERE u.ID_Usuario=?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
 $perfil = $result->fetch_assoc();
 ?>
 
@@ -131,9 +156,7 @@ $perfil = $result->fetch_assoc();
     </div>
 </section>
 
-
 <script>
-    
     function confirmDelete() {
         if (confirm("¿Estás seguro de que deseas eliminar tu perfil? Esta acción no se puede deshacer.")) {
             if (confirm("¿Seguro que deseas eliminar tu cuenta? Esta acción también eliminará tu cuenta de usuario y cerrará sesión.")) {
@@ -156,125 +179,41 @@ $perfil = $result->fetch_assoc();
     }
 </script>
 
-
 <section class="postulaciones">
     <h2>Postulaciones</h2>
     <p>En este apartado podrás ver los puestos a los que has aplicado y su estado.</p>
 
     <?php
-
+    // Mostrar postulaciones
     $sql_postulaciones = "
         SELECT O.Titulo AS Oferta, A.FechaAplicacion, A.EstadoAplicacion
         FROM Aplicaciones A
         INNER JOIN Ofertas_Empleo O ON A.ID_Oferta = O.ID_Oferta
         WHERE A.ID_PerfilJunior = (SELECT ID_PerfilJunior FROM Perfil_Junior WHERE ID_Usuario = ?)
-        ORDER BY A.FechaAplicacion DESC
     ";
-
     $stmt_postulaciones = $conn->prepare($sql_postulaciones);
-    $stmt_postulaciones->bind_param("i", $user_id); 
+    $stmt_postulaciones->bind_param("i", $user_id);
     $stmt_postulaciones->execute();
-    $result_postulaciones = $stmt_postulaciones->get_result();
-
-    if ($result_postulaciones->num_rows > 0) {
-        echo "<table>
-                <thead>
-                    <tr>
-                        <th>Título de la Oferta</th>
-                        <th>Fecha de Aplicación</th>
-                        <th>Estado de la Aplicación</th>
-                    </tr>
-                </thead>
-                <tbody>";
-        while ($row = $result_postulaciones->fetch_assoc()) {
-            echo "<tr>
-                    <td>{$row['Oferta']}</td>
-                    <td>{$row['FechaAplicacion']}</td>
-                    <td>{$row['EstadoAplicacion']}</td>
-                  </tr>";
-        }
-        echo "</tbody></table>";
-    } else {
-        echo "<p>No tienes postulaciones registradas.</p>";
-    }
-
+    $postulaciones = $stmt_postulaciones->get_result();
     ?>
+
+    <table>
+        <tr>
+            <th>Oferta</th>
+            <th>Fecha de Postulación</th>
+            <th>Estado</th>
+        </tr>
+        <?php while ($row = $postulaciones->fetch_assoc()): ?>
+            <tr>
+                <td><?php echo htmlspecialchars($row['Oferta']); ?></td>
+                <td><?php echo $row['FechaAplicacion']; ?></td>
+                <td><?php echo $row['EstadoAplicacion']; ?></td>
+            </tr>
+        <?php endwhile; ?>
+    </table>
 </section>
 
-<section class="estadisticas">
-    <h2>Ofertas de Empleo Mejor Pagadas</h2>
-    <div class="boxEstadisticas">
-        <canvas id="graficoOfertas"></canvas>
+</main>
 
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script>
-            <?php
-            // Consulta para obtener las ofertas mejor pagadas
-            $sql_ofertas = "SELECT Titulo, RangoSalarial FROM ofertas_empleo ORDER BY RangoSalarial DESC LIMIT 10";
-            $result_ofertas = $conn->query($sql_ofertas);
-
-            $titulos = [];
-            $rangos_salariales = [];
-
-            if ($result_ofertas->num_rows > 0) {
-                while ($row = $result_ofertas->fetch_assoc()) {
-                    $titulos[] = $row['Titulo'];
-                    $rangos_salariales[] = $row['RangoSalarial'];
-                }
-            }
-            ?>
-
-            const ctxOfertas = document.getElementById('graficoOfertas').getContext('2d');
-            const dataOfertas = {
-                labels: <?php echo json_encode($titulos); ?>,
-                datasets: [{
-                    label: 'Rango Salarial (en USD)',
-                    data: <?php echo json_encode($rangos_salariales); ?>,
-                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 1
-                }]
-            };
-
-            const configOfertas = {
-                type: 'bar',
-                data: dataOfertas,
-                options: {
-                    indexAxis: 'y', // Barras horizontales
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(tooltipItem) {
-                                    return '$' + tooltipItem.raw.toLocaleString();
-                                }
-                            }
-                        }
-                    },
-                    scales: {
-                        x: {
-                            beginAtZero: true,
-                            ticks: {
-                                callback: function(value) {
-                                    return '$' + value;
-                                }
-                            }
-                        }
-                    }
-                }
-            };
-
-            new Chart(ctxOfertas, configOfertas);
-        </script>
-    </div>
-</section>
-    </main>
-    <footer>
-        Derechos reservados Grupo#1
-    </footer>
 </body>
-
 </html>
