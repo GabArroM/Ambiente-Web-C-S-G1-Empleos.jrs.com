@@ -23,6 +23,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt_oferta->bind_param("isssss", $id_empleador, $titulo, $descripcion, $categoria, $tipo_contrato, $rango_salarial);
             
             if ($stmt_oferta->execute()) {
+                
+                header("Location: ModEmpleados.php"); 
                 echo "<script>alert('Oferta insertada correctamente.');</script>";
             } else {
                 echo "Error al insertar la oferta: " . $stmt_oferta->error;
