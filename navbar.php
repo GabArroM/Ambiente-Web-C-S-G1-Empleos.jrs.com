@@ -22,8 +22,9 @@ if (!empty($_SESSION) && isset($_SESSION["user_type"])) {
         $menu = [
             ["label" => "Inicio", "url" => "index.php"],
             ["url" => "sobreNosotros.php", "label" => "Sobre Nosotros"],
-            ["url" => "ModEmpleados.php", "label" => "Modulo Empleador"],
-            ["url" => "OfertasEmpleo.php", "label" => "Mis Ofertas"],
+            ["url" => "PerfilEmpleador.php", "label" => "Perfil"],
+            ["url" => "ModEmpleados.php", "label" => "Gestionar Ofertas"],
+            ["url" => "OfertasEmpleo.php", "label" => "Postulaciones"],
             ["url" => "logout.php", "label" => "Salir", "button" => true]
         ];
     }

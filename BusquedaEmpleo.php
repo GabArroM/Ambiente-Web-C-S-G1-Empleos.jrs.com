@@ -27,8 +27,16 @@ $resultPerfil = mysqli_query($conn, $sqlPerfil);
 $perfilRow = mysqli_fetch_assoc($resultPerfil);
 $id_perfilJunior = $perfilRow['ID_PerfilJunior'];
 
-
-$sql = "SELECT * FROM Ofertas_Empleo";
+$sql = "
+    SELECT 
+        Ofertas_Empleo.*, 
+        Empleadores.Empresa, 
+        Empleadores.Ubicacion 
+    FROM 
+        Ofertas_Empleo
+    JOIN 
+        Empleadores ON Ofertas_Empleo.ID_Empleador = Empleadores.ID_Empleador
+";
 $result = mysqli_query($conn, $sql);
 ?>
 
@@ -49,6 +57,8 @@ $result = mysqli_query($conn, $sql);
                                 <th>Rango Salarial</th>
                                 <th>Tipo de Contrato</th>
                                 <th>Fecha de Publicación</th>
+                                <th>Empresa</th> <!-- Nueva columna -->
+                                <th>Ubicación</th> <!-- Nueva columna -->
                                 <th>Acción</th>
                             </tr>
                         </thead>
@@ -62,6 +72,8 @@ $result = mysqli_query($conn, $sql);
                             <td>' . htmlspecialchars($row['RangoSalarial']) . '</td>
                             <td>' . htmlspecialchars($row['TipoContrato']) . '</td>
                             <td>' . $row['FechaPublicacion'] . '</td>
+                            <td>' . htmlspecialchars($row['Empresa']) . '</td> <!-- Mostrar empresa -->
+                            <td>' . htmlspecialchars($row['Ubicacion']) . '</td> <!-- Mostrar ubicación -->
                             <td>
                                 <button type="button" id="aplicar-btn-' . $row['ID_Oferta'] . '" class="aplicar-btn" data-oferta-id="' . $row['ID_Oferta'] . '" data-perfil-id="' . $id_perfilJunior . '">Aplicar</button>
                             </td>

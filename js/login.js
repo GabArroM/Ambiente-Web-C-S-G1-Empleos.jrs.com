@@ -19,10 +19,10 @@ document.getElementById("loginButton").addEventListener("click", function(event)
     .then(data => {
         if (data.success) {
             if (data.tipoUsuario == "Junior") {
-                window.location.href = "ModSolicitantes.php";
+                window.location.href = "index.php";
                 
             } else if (data.tipoUsuario == "Empleador") {
-                window.location.href = "ModEmpleados.php";
+                window.location.href = "index.php";
                 
             }
         } else {
