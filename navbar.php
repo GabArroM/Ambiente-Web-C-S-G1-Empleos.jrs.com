@@ -16,6 +16,7 @@ if (!empty($_SESSION) && isset($_SESSION["user_type"])) {
             ["url" => "sobreNosotros.php", "label" => "Sobre Nosotros"],
             ["url" => "BusquedaEmpleo.php", "label" => "Buscar Empleo"],
             ["url" => "ModSolicitantes.php", "label" => "Perfil"],
+            ["url" => "comentarios.php", "label" => "Comentarios"],
             ["url" => "logout.php", "label" => "Salir", "button" => true]
         ];
     } else if ($_SESSION["user_type"] == "Empleador") {
@@ -25,6 +26,7 @@ if (!empty($_SESSION) && isset($_SESSION["user_type"])) {
             ["url" => "PerfilEmpleador.php", "label" => "Perfil"],
             ["url" => "ModEmpleados.php", "label" => "Gestionar Ofertas"],
             ["url" => "OfertasEmpleo.php", "label" => "Postulaciones"],
+            ["url" => "comentariosEmpleador.php", "label" => "Comentarios"],
             ["url" => "logout.php", "label" => "Salir", "button" => true]
         ];
     }
