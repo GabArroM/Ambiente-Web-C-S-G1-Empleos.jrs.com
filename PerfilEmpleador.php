@@ -47,45 +47,53 @@
         }
 
         // Eliminar cuenta
-        if (isset($_POST['action']) && $_POST['action'] == 'delete') {
-            if (isset($_POST['confirm_delete']) && $_POST['confirm_delete'] == 'yes') {
+if (isset($_POST['action']) && $_POST['action'] == 'delete') {
+    if (isset($_POST['confirm_delete']) && $_POST['confirm_delete'] == 'yes') {
 
-                // Primero eliminar las aplicaciones relacionadas
-                $sql_aplicaciones = "DELETE FROM aplicaciones WHERE ID_Oferta IN 
-                    (SELECT ID_Oferta FROM ofertas_empleo WHERE ID_Empleador = 
-                    (SELECT ID_Empleador FROM empleadores WHERE ID_Usuario = '$user_id'))";
-                if ($conn->query($sql_aplicaciones) === TRUE) {
+        // Primero eliminar los comentarios relacionados
+        $sql_comentarios = "DELETE FROM comentarios WHERE ID_Empleador IN 
+            (SELECT ID_Empleador FROM empleadores WHERE ID_Usuario = '$user_id')";
+        if ($conn->query($sql_comentarios) === TRUE) {
 
-                    // Eliminar ofertas de empleo
-                    $sql_ofertas = "DELETE FROM ofertas_empleo WHERE ID_Empleador = 
-                        (SELECT ID_Empleador FROM empleadores WHERE ID_Usuario = '$user_id')";
-                    if ($conn->query($sql_ofertas) === TRUE) {
+            // Eliminar las aplicaciones relacionadas
+            $sql_aplicaciones = "DELETE FROM aplicaciones WHERE ID_Oferta IN 
+                (SELECT ID_Oferta FROM ofertas_empleo WHERE ID_Empleador = 
+                (SELECT ID_Empleador FROM empleadores WHERE ID_Usuario = '$user_id'))";
+            if ($conn->query($sql_aplicaciones) === TRUE) {
 
-                        // Eliminar el perfil del empleador
-                        $sql = "DELETE FROM empleadores WHERE ID_Usuario='$user_id'";
-                        if ($conn->query($sql) === TRUE) {
+                // Eliminar ofertas de empleo
+                $sql_ofertas = "DELETE FROM ofertas_empleo WHERE ID_Empleador = 
+                    (SELECT ID_Empleador FROM empleadores WHERE ID_Usuario = '$user_id')";
+                if ($conn->query($sql_ofertas) === TRUE) {
 
-                            // Eliminar el usuario
-                            $sql_user = "DELETE FROM usuarios WHERE ID_Usuario='$user_id'";
-                            if ($conn->query($sql_user) === TRUE) {
-                                session_unset();
-                                session_destroy();
-                                header('Location: Autenticarse.php');
-                                exit();
-                            } else {
-                                echo "<div class='alert alert-danger'>Error al eliminar la cuenta de usuario: " . $conn->error . "</div>";
-                            }
+                    // Eliminar el perfil del empleador
+                    $sql = "DELETE FROM empleadores WHERE ID_Usuario='$user_id'";
+                    if ($conn->query($sql) === TRUE) {
+
+                        // Eliminar el usuario
+                        $sql_user = "DELETE FROM usuarios WHERE ID_Usuario='$user_id'";
+                        if ($conn->query($sql_user) === TRUE) {
+                            session_unset();
+                            session_destroy();
+                            header('Location: Autenticarse.php');
+                            exit();
                         } else {
-                            echo "<div class='alert alert-danger'>Error al eliminar el perfil: " . $conn->error . "</div>";
+                            echo "<div class='alert alert-danger'>Error al eliminar la cuenta de usuario: " . $conn->error . "</div>";
                         }
                     } else {
-                        echo "<div class='alert alert-danger'>Error al eliminar las ofertas de empleo: " . $conn->error . "</div>";
+                        echo "<div class='alert alert-danger'>Error al eliminar el perfil: " . $conn->error . "</div>";
                     }
                 } else {
-                    echo "<div class='alert alert-danger'>Error al eliminar las aplicaciones: " . $conn->error . "</div>";
+                    echo "<div class='alert alert-danger'>Error al eliminar las ofertas de empleo: " . $conn->error . "</div>";
                 }
+            } else {
+                echo "<div class='alert alert-danger'>Error al eliminar las aplicaciones: " . $conn->error . "</div>";
             }
+        } else {
+            echo "<div class='alert alert-danger'>Error al eliminar los comentarios: " . $conn->error . "</div>";
         }
+    }
+}
     }
 
     $sql_user = "SELECT u.*, e.* FROM Usuarios u 
