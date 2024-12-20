@@ -127,7 +127,7 @@
 
         <section class="form-section">
             <h2 class="section-title">Crear Propuesta de Trabajo</h2>
-            <form method="POST" action="./ControladorModEmpleados/AgregarOferta.php" id="jobProposalForm">
+            <form method="POST" action="AgregarOferta.php" id="jobProposalForm">
                 <input type="hidden" id="id_empleador" name="id_empleador" value="<?php echo $id_empleador; ?>">
                 <div class="form-group">
                     <label for="titulo">Título:</label>

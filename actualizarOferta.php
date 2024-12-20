@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($stmt->execute()) {
         echo "Oferta actualizada con éxito.";
-        header("Location: ../ModEmpleados.php"); // Redirigir de vuelta al módulo principal
+        header("Location: ./ModEmpleados.php"); // Redirigir de vuelta al módulo principal
         exit;
     } else {
         echo "Error al actualizar la oferta: " . $conn->error;

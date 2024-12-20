@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <title>Postulaciones Recibidas</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/ModEmpleados.css?v=1.3">
-    <link rel="stylesheet" href="./css/BuscarEmpleo.css?v=1.0">
-    <link rel="stylesheet" href="./css/style.css?v=1.4">
+    <link rel="stylesheet" href="./css/ModEmpleados.css?v=1.6">
+    <link rel="stylesheet" href="./css/BuscarEmpleo.css?v=1.5">
+    <link rel="stylesheet" href="./css/style.css?v=1.7">
 </head>
 
 <body>
@@ -72,15 +72,15 @@ $result = $stmt->get_result();
                         <td>{$row['Email']}</td>
                         <td>{$row['Educacion']}</td>
                         <td>{$row['Habilidades']}</td>
-                        <td><a href='{$row['CV_URL']}' target='_blank'>Ver CV</a></td>
+                        <td><a class='aplicar-btn' href='{$row['CV_URL']}' target='_blank'>Ver CV</a></td>
                         <td>{$row['FechaAplicacion']}</td>
                         <td>{$row['EstadoAplicacion']}</td>
                         <td>
                             <form method='POST' style='display: inline-block;'>
                                 <input type='hidden' name='id_aplicacion' value='{$row['ID_Aplicacion']}'>
-                                <button type='submit' name='accion' value='Rechazado'>Rechazar</button>
-                                <button type='submit' name='accion' value='En revisión'>Revisión</button>
-                                <button type='submit' name='accion' value='Aprobado'>Aprobar</button>
+                                <button class='aplicar-btn'type='submit' name='accion' value='Rechazado'>Rechazar</button>
+                                <button class='aplicar-btn'type='submit type='submit' name='accion' value='En revisión'>Revisión</button>
+                                <button class='aplicar-btn'type='submit type='submit' name='accion' value='Aprobado'>Aprobar</button>
                             </form>
                         </td>
                       </tr>";
