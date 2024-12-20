@@ -23,6 +23,7 @@ if (!empty($_SESSION) && isset($_SESSION["user_type"])) {
             ["label" => "Inicio", "url" => "index.php"],
             ["url" => "sobreNosotros.php", "label" => "Sobre Nosotros"],
             ["url" => "ModEmpleados.php", "label" => "Modulo Empleador"],
+            ["url" => "OfertasEmpleo.php", "label" => "Mis Ofertas"],
             ["url" => "logout.php", "label" => "Salir", "button" => true]
         ];
     }
