@@ -159,7 +159,7 @@
         <section class="offers-list-section">
             <h2>Ofertas de Trabajo Publicadas</h2>
             <?php
-            $sql_ofertas = "SELECT * FROM ofertas_empleo";
+            $sql_ofertas = "SELECT * FROM ofertas_empleo where id_empleador = $id_empleador ";
             $result_ofertas = $conn->query($sql_ofertas);
 
             if ($result_ofertas->num_rows > 0) {
