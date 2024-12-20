@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="./css/SobreNosotro.css">
+    <title>SobreNosotros</title>
+    <link rel="stylesheet" href="./css/SobreNosotros.css">
     <link rel="stylesheet" href="./css/style.css?v=1.3">
 </head>
+
 <body>
     <?php include("navbar.php") ?>
     <header>
-        <h1 id="EncabSecunda" >Sobre Nosotros</h1>
+        <h1 id="EncabSecunda">Sobre Nosotros</h1>
     </header>
 
     <div class="container">
@@ -51,7 +53,8 @@
         </section>
     </div>
     <footer>
-    Derechos reservados Grupo#1
-</footer>
+        Derechos reservados Grupo#1
+    </footer>
 </body>
+
 </html>
