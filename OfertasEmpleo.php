@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <title>Ofertas de Empleo</title>
@@ -15,94 +14,77 @@ include("navbar.php");
 include("./Conexion/db.php");
 
 if (!isset($_SESSION['user_id'])) {
-    header('Location: Autenticarse.php'); 
+    echo json_encode(['error' => 'Usuario no autenticado']);
     exit();
 }
 
 $id_empleador = $_SESSION['user_id'];
-
-// Aceptar o rechazar aplicaciones
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action'], $_POST['id_aplicacion'])) {
-    $id_aplicacion = $_POST['id_aplicacion'];
-    $nuevo_estado = $_POST['action'] == 'accept' ? 'Aceptada' : 'Rechazada';
-
-    // Actualizar estado de la aplicación
-    $sql_update = "UPDATE Aplicaciones SET Estado = ? WHERE ID_Aplicacion = ? AND ID_Oferta IN 
-                    (SELECT ID_Oferta FROM Ofertas_Empleo WHERE ID_Empleador = ?)";
-    if ($stmt_update = $conn->prepare($sql_update)) {
-        $stmt_update->bind_param("sii", $nuevo_estado, $id_aplicacion, $id_empleador);
-        $stmt_update->execute();
-        $stmt_update->close();
-    }
-}
-
-// Consultar ofertas de empleo
-$sql_ofertas = "SELECT o.ID_Oferta, o.Titulo, o.Descripcion, o.Categoria, o.TipoContrato, o.RangoSalarial 
-                FROM Ofertas_Empleo o WHERE o.ID_Empleador = ?";
-$stmt_ofertas = $conn->prepare($sql_ofertas);
-$stmt_ofertas->bind_param("i", $id_empleador);
-$stmt_ofertas->execute();
-$result_ofertas = $stmt_ofertas->get_result();
+echo json_encode(['id_empleador' => $id_empleador]);  
 ?>
 
 <main>
     <h2>Mis Ofertas de Empleo</h2>
+    
+    <div id="ofertas-container"></div>
 
-    <?php while ($oferta = $result_ofertas->fetch_assoc()): ?>
-        <section class="oferta">
-            <h3><?php echo htmlspecialchars($oferta['Titulo']); ?></h3>
-            <p><strong>Descripción:</strong> <?php echo htmlspecialchars($oferta['Descripcion']); ?></p>
-            <p><strong>Categoría:</strong> <?php echo htmlspecialchars($oferta['Categoria']); ?></p>
-            <p><strong>Tipo de Contrato:</strong> <?php echo htmlspecialchars($oferta['TipoContrato']); ?></p>
-            <p><strong>Rango Salarial:</strong> <?php echo htmlspecialchars($oferta['RangoSalarial']); ?></p>
+    <script>
+        fetch('obtener_ofertas.php')
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);  
 
-            <h4>Aplicaciones Recibidas</h4>
-            <?php 
-            // Consultar aplicaciones para esta oferta
-            $sql_aplicaciones = "SELECT a.ID_Aplicacion, u.Nombre, u.Email, p.Telefono, p.CV_URL, a.Estado 
-                                 FROM Aplicaciones a
-                                 JOIN Usuarios u ON a.ID_Usuario = u.ID_Usuario
-                                 JOIN Perfil_Junior p ON a.ID_Usuario = p.ID_Usuario
-                                 WHERE a.ID_Oferta = ?";
-            $stmt_aplicaciones = $conn->prepare($sql_aplicaciones);
-            $stmt_aplicaciones->bind_param("i", $oferta['ID_Oferta']);
-            $stmt_aplicaciones->execute();
-            $result_aplicaciones = $stmt_aplicaciones->get_result();
+        const ofertasContainer = document.getElementById('ofertas-container');
+        
+        if (data.error) {
+            ofertasContainer.innerHTML = "<p>" + data.error + "</p>";
+            return;
+        }
 
-            // Verificar si hay aplicaciones antes de mostrar
-            if ($result_aplicaciones->num_rows > 0):
-            ?>
-                <ul>
-                    <?php while ($aplicacion = $result_aplicaciones->fetch_assoc()): ?>
-                        <li>
-                            <p><strong>Nombre:</strong> <?php echo htmlspecialchars($aplicacion['Nombre']); ?></p>
-                            <p><strong>Email:</strong> <?php echo htmlspecialchars($aplicacion['Email']); ?></p>
-                            <p><strong>Teléfono:</strong> <?php echo htmlspecialchars($aplicacion['Telefono']); ?></p>
-                            <p><strong>Estado:</strong> <?php echo htmlspecialchars($aplicacion['Estado']); ?></p>
-                            <?php if ($aplicacion['CV_URL']): ?>
-                                <p><a href="<?php echo $aplicacion['CV_URL']; ?>" target="_blank">Ver CV</a></p>
-                            <?php endif; ?>
-                            
-                            <form method="POST" action="">
-                                <input type="hidden" name="id_aplicacion" value="<?php echo $aplicacion['ID_Aplicacion']; ?>">
-                                <button type="submit" name="action" value="accept">Aceptar</button>
-                                <button type="submit" name="action" value="reject">Rechazar</button>
-                            </form>
-                        </li>
-                    <?php endwhile; ?>
-                </ul>
-            <?php else: ?>
-                <p>No hay aplicaciones para esta oferta.</p>
-            <?php endif; ?>
-            <?php $stmt_aplicaciones->close(); ?>
-        </section>
-    <?php endwhile; ?>
+        if (data.ofertas.length > 0) {
+            data.ofertas.forEach(oferta => {
+                let ofertaHTML = `
+                    <div class="oferta">
+                        <h3>${oferta.Titulo}</h3>
+                        <p>${oferta.Descripcion}</p>
+                        <p><strong>Categoría:</strong> ${oferta.Categoria}</p>
+                        <p><strong>Rango Salarial:</strong> ${oferta.RangoSalarial}</p>
+                        <p><strong>Tipo de Contrato:</strong> ${oferta.TipoContrato}</p>
+                        <p><strong>Fecha de Publicación:</strong> ${oferta.FechaPublicacion}</p>
+                        <h4>Postulaciones:</h4>
+                `;
+                
+                if (oferta.postulaciones.length > 0) {
+                    oferta.postulaciones.forEach(postulante => {
+                        ofertaHTML += `
+                            <div class="postulante">
+                                <p><strong>Nombre:</strong> ${postulante.Nombre}</p>
+                                <p><strong>Educación:</strong> ${postulante.Educacion}</p>
+                                <p><strong>Habilidades:</strong> ${postulante.Habilidades}</p>
+                                <p><strong>Teléfono:</strong> ${postulante.Telefono}</p>
+                            </div>
+                        `;
+                    });
+                } else {
+                    ofertaHTML += "<p>No hay postulaciones para esta oferta.</p>";
+                }
+                ofertaHTML += "</div>";
 
-    <?php $stmt_ofertas->close(); ?>
+                ofertasContainer.innerHTML += ofertaHTML;
+            });
+        } else {
+            ofertasContainer.innerHTML = "<p>No tienes ofertas de empleo publicadas.</p>";
+        }
+    })
+    .catch(error => {
+        console.error('Error al cargar las ofertas:', error);
+    });
+
+    </script>
 </main>
 
 <footer>
     Derechos reservados Grupo#1
 </footer>
+
 </body>
 </html>
