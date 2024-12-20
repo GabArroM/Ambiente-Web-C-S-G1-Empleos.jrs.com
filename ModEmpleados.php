@@ -186,8 +186,8 @@
                     <td>" . htmlspecialchars($row['TipoContrato']) . "</td>
                     <td>" . htmlspecialchars($row['RangoSalarial']) . "</td>
                     <td>
-                        <a href='ControladorModEmpleados/editarTarea.php?id=" . $row['ID_Oferta'] . "'>Editar</a>
-                        <a href='ControladorModEmpleados/eliminarTarea.php?id=" . $row['ID_Oferta'] . "'>Eliminar</a>
+                        <a href='editarOferta.php?id=" . $row['ID_Oferta'] . "'>Editar</a>
+                        <a href='eliminarOferta.php?id=" . $row['ID_Oferta'] . "'>Eliminar</a>
                     </td>
                 </tr>";
                 }

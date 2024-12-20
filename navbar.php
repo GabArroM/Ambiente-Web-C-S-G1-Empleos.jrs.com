@@ -40,10 +40,6 @@ if (!empty($_SESSION) && isset($_SESSION["user_type"])) {
             <?php } ?>
         <?php } ?>
         
-        <form action="" method="GET" class="search-form">
-            <input type="text" name="query" class="search-bar" placeholder="">
-            <button type="submit" class="search-button">Buscar</button>
-        </form>
 
         <?php foreach ($menu as $item) { ?>
             <?php if (isset($item['button']) && $item['button']) { ?>

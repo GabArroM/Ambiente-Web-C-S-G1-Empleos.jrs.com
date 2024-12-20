@@ -1,5 +1,5 @@
 <?php
-include("../Conexion/db.php");
+include("./Conexion/db.php");
 
 if (isset($_GET['id'])) {
     $idOferta = $_GET['id'];

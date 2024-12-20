@@ -16,7 +16,7 @@
 }
 
 header {
-    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    
     color: white;
     padding: 30px 0;
     text-align: center;
