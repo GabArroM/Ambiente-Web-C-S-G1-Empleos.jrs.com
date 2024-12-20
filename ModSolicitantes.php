@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="./css/ModSolicitante.css?v=1.4">
     <link rel="stylesheet" href="./css/style.css?v=1.4">
     <link rel="stylesheet" href="./css/BuscarEmpleo.css?v=1.0">
+
 </head>
 
 <body>
@@ -156,7 +157,9 @@ $perfil = $result->fetch_assoc();
     </div>
 </section>
 
+
 <script>
+    
     function confirmDelete() {
         if (confirm("¿Estás seguro de que deseas eliminar tu perfil? Esta acción no se puede deshacer.")) {
             if (confirm("¿Seguro que deseas eliminar tu cuenta? Esta acción también eliminará tu cuenta de usuario y cerrará sesión.")) {
@@ -178,6 +181,7 @@ $perfil = $result->fetch_assoc();
         }
     }
 </script>
+
 
 <section class="postulaciones">
     <h2>Postulaciones</h2>
@@ -213,7 +217,80 @@ $perfil = $result->fetch_assoc();
     </table>
 </section>
 
-</main>
+<section class="estadisticas">
+    <h2>Ofertas de Empleo Mejor Pagadas</h2>
+    <div class="boxEstadisticas">
+        <canvas id="graficoOfertas"></canvas>
 
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            <?php
+            // Consulta para obtener las ofertas mejor pagadas
+            $sql_ofertas = "SELECT Titulo, RangoSalarial FROM ofertas_empleo ORDER BY RangoSalarial DESC LIMIT 10";
+            $result_ofertas = $conn->query($sql_ofertas);
+
+            $titulos = [];
+            $rangos_salariales = [];
+
+            if ($result_ofertas->num_rows > 0) {
+                while ($row = $result_ofertas->fetch_assoc()) {
+                    $titulos[] = $row['Titulo'];
+                    $rangos_salariales[] = $row['RangoSalarial'];
+                }
+            }
+            ?>
+
+            const ctxOfertas = document.getElementById('graficoOfertas').getContext('2d');
+            const dataOfertas = {
+                labels: <?php echo json_encode($titulos); ?>,
+                datasets: [{
+                    label: 'Rango Salarial (en USD)',
+                    data: <?php echo json_encode($rangos_salariales); ?>,
+                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            };
+
+            const configOfertas = {
+                type: 'bar',
+                data: dataOfertas,
+                options: {
+                    indexAxis: 'y', // Barras horizontales
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(tooltipItem) {
+                                    return '$' + tooltipItem.raw.toLocaleString();
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + value;
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            new Chart(ctxOfertas, configOfertas);
+        </script>
+    </div>
+</section>
+    </main>
+    <footer>
+        Derechos reservados Grupo#1
+    </footer>
 </body>
+
 </html>
