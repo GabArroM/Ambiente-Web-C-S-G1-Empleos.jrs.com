@@ -20,7 +20,6 @@ if (!$result_ofertas) {
 
 $ofertas = [];
 if (mysqli_num_rows($result_ofertas) > 0) {
-    // Tu código para procesar las ofertas sigue aquí...
 } else {
     echo json_encode(['error' => 'No se encontraron ofertas.']);
     exit();
@@ -28,7 +27,6 @@ if (mysqli_num_rows($result_ofertas) > 0) {
 
 if (mysqli_num_rows($result_ofertas) > 0) {
     while ($row_oferta = mysqli_fetch_assoc($result_ofertas)) {
-        // Obtener las postulaciones de cada oferta
         $sql_postulaciones = "SELECT p.ID_Usuario, p.Educacion, p.Habilidades, p.Telefono, u.Nombre 
                               FROM Aplicaciones a
                               JOIN Perfil_Junior p ON a.ID_PerfilJunior = p.ID_PerfilJunior
@@ -43,7 +41,6 @@ if (mysqli_num_rows($result_ofertas) > 0) {
             }
         }
 
-        // Agregar la oferta y sus postulaciones al array
         $ofertas[] = [
             'ID_Oferta' => $row_oferta['ID_Oferta'],
             'Titulo' => $row_oferta['Titulo'],
@@ -57,7 +54,6 @@ if (mysqli_num_rows($result_ofertas) > 0) {
     }
 }
 
-// Enviar la respuesta en formato JSON
 echo json_encode(['ofertas' => $ofertas]);
 
 ?>
