@@ -2,84 +2,94 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Ofertas de Empleo</title>
+    <title>Postulaciones Recibidas</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/ModEmpleados.css?v=1.3">
+    <link rel="stylesheet" href="./css/BuscarEmpleo.css?v=1.0">
     <link rel="stylesheet" href="./css/style.css?v=1.4">
 </head>
 
 <body>
 <?php
 include("navbar.php");
-include("./Conexion/db.php");
+include("./Conexion/db.php"); 
 
-if (!isset($_SESSION['user_id'])) {
-    echo json_encode(['error' => 'Usuario no autenticado']);
-    exit();
+$user_id = $_SESSION['user_id'];
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['accion'], $_POST['id_aplicacion'])) {
+    $accion = $_POST['accion'];
+    $id_aplicacion = $_POST['id_aplicacion'];
+
+    $valores_permitidos = ['Aplicado', 'En revisión', 'Rechazado', 'Aprobado'];
+
+    if (in_array($accion, $valores_permitidos)) {
+        $sql_update = "UPDATE Aplicaciones SET EstadoAplicacion = ? WHERE ID_Aplicacion = ?";
+        $stmt_update = $conn->prepare($sql_update);
+        $stmt_update->bind_param("si", $accion, $id_aplicacion);
+        $stmt_update->execute();
+    }
 }
 
-$id_empleador = $_SESSION['user_id'];
-echo json_encode(['id_empleador' => $id_empleador]);  
+$sql = "
+    SELECT A.ID_Aplicacion, O.Titulo AS Oferta, U.Nombre AS Postulante, U.Email, 
+           P.Educacion, P.Habilidades, P.CV_URL, A.FechaAplicacion, A.EstadoAplicacion
+    FROM Aplicaciones A
+    INNER JOIN Ofertas_Empleo O ON A.ID_Oferta = O.ID_Oferta
+    INNER JOIN Empleadores E ON O.ID_Empleador = E.ID_Empleador
+    INNER JOIN Perfil_Junior P ON A.ID_PerfilJunior = P.ID_PerfilJunior
+    INNER JOIN Usuarios U ON P.ID_Usuario = U.ID_Usuario
+    WHERE E.ID_Usuario = ?";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
 ?>
 
 <main>
-    <h2>Mis Ofertas de Empleo</h2>
-    
-    <div id="ofertas-container"></div>
+    <h2>Postulaciones Recibidas</h2>
+    <table border="1">
+        <tr>
+            <th>ID Aplicación</th>
+            <th>Oferta de Empleo</th>
+            <th>Postulante</th>
+            <th>Email</th>
+            <th>Educación</th>
+            <th>Habilidades</th>
+            <th>CV</th>
+            <th>Fecha de Aplicación</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
 
-    <script>
-        fetch('obtener_ofertas.php')
-    .then(response => response.json())
-    .then(data => {
-        console.log(data);  
-
-        const ofertasContainer = document.getElementById('ofertas-container');
-        
-        if (data.error) {
-            ofertasContainer.innerHTML = "<p>" + data.error + "</p>";
-            return;
-        }
-
-        if (data.ofertas.length > 0) {
-            data.ofertas.forEach(oferta => {
-                let ofertaHTML = `
-                    <div class="oferta">
-                        <h3>${oferta.Titulo}</h3>
-                        <p>${oferta.Descripcion}</p>
-                        <p><strong>Categoría:</strong> ${oferta.Categoria}</p>
-                        <p><strong>Rango Salarial:</strong> ${oferta.RangoSalarial}</p>
-                        <p><strong>Tipo de Contrato:</strong> ${oferta.TipoContrato}</p>
-                        <p><strong>Fecha de Publicación:</strong> ${oferta.FechaPublicacion}</p>
-                        <h4>Postulaciones:</h4>
-                `;
-                
-                if (oferta.postulaciones.length > 0) {
-                    oferta.postulaciones.forEach(postulante => {
-                        ofertaHTML += `
-                            <div class="postulante">
-                                <p><strong>Nombre:</strong> ${postulante.Nombre}</p>
-                                <p><strong>Educación:</strong> ${postulante.Educacion}</p>
-                                <p><strong>Habilidades:</strong> ${postulante.Habilidades}</p>
-                                <p><strong>Teléfono:</strong> ${postulante.Telefono}</p>
-                            </div>
-                        `;
-                    });
-                } else {
-                    ofertaHTML += "<p>No hay postulaciones para esta oferta.</p>";
-                }
-                ofertaHTML += "</div>";
-
-                ofertasContainer.innerHTML += ofertaHTML;
-            });
+        <?php 
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                echo "<tr>
+                        <td>{$row['ID_Aplicacion']}</td>
+                        <td>{$row['Oferta']}</td>
+                        <td>{$row['Postulante']}</td>
+                        <td>{$row['Email']}</td>
+                        <td>{$row['Educacion']}</td>
+                        <td>{$row['Habilidades']}</td>
+                        <td><a href='{$row['CV_URL']}' target='_blank'>Ver CV</a></td>
+                        <td>{$row['FechaAplicacion']}</td>
+                        <td>{$row['EstadoAplicacion']}</td>
+                        <td>
+                            <form method='POST' style='display: inline-block;'>
+                                <input type='hidden' name='id_aplicacion' value='{$row['ID_Aplicacion']}'>
+                                <button type='submit' name='accion' value='Rechazado'>Rechazar</button>
+                                <button type='submit' name='accion' value='En revisión'>Revisión</button>
+                                <button type='submit' name='accion' value='Aprobado'>Aprobar</button>
+                            </form>
+                        </td>
+                      </tr>";
+            }
         } else {
-            ofertasContainer.innerHTML = "<p>No tienes ofertas de empleo publicadas.</p>";
+            echo "<tr><td colspan='10'>No tienes postulaciones recibidas.</td></tr>";
         }
-    })
-    .catch(error => {
-        console.error('Error al cargar las ofertas:', error);
-    });
-
-    </script>
+        ?>
+    </table>
 </main>
 
 <footer>
