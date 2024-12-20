@@ -30,24 +30,24 @@
             <h2 class="section-title">Nuestro Equipo</h2>
             <div class="team-member">
                 <div>
-                    <img src="https://via.placeholder.com/150" alt="Calvo Zumbado Andony">
+                    <img src="./Fotos/cover.jpg" alt="Calvo Zumbado Andony">
                     <h3>Calvo Zumbado Andony</h3>
-                    <p>Co-Fundador</p>
+                    <p>Desarrollador</p>
                 </div>
                 <div>
-                    <img src="https://via.placeholder.com/150" alt="Chen Mo Oscar Jiahua">
+                    <img src="./Fotos/hornet.jpg" alt="Chen Mo Oscar Jiahua">
                     <h3>Chen Mo Oscar Jiahua</h3>
-                    <p>Co-Fundador</p>
+                    <p>Desarrollador</p>
                 </div>
                 <div>
-                    <img src="https://via.placeholder.com/150" alt="Arroyo Matamoros Gabriel Alejandro">
+                    <img src="./Fotos/Quirrel-Main.webp" alt="Arroyo Matamoros Gabriel Alejandro">
                     <h3>Arroyo Matamoros Gabriel Alejandro</h3>
-                    <p>Director de Desarrollo</p>
+                    <p>Desarrollador</p>
                 </div>
                 <div>
-                    <img src="https://via.placeholder.com/150" alt="Cruz Moreno Hermes Isaac">
+                    <img src="./Fotos/sheo.webp" alt="Cruz Moreno Hermes Isaac">
                     <h3>Cruz Moreno Hermes Isaac</h3>
-                    <p>Director de Operaciones</p>
+                    <p>Desarrollador</p>
                 </div>
             </div>
         </section>
