@@ -5,8 +5,10 @@
     <meta charset="UTF-8">
     <title>Módulo Solicitantes</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">   
-    <link rel="stylesheet" href="./css/ModSolicitante.css?v=1.3">
+    <link rel="stylesheet" href="./css/ModSolicitante.css?v=1.4">
     <link rel="stylesheet" href="./css/style.css?v=1.4">
+    <link rel="stylesheet" href="./css/BuscarEmpleo.css?v=1.0">
+
 </head>
 
 <body>
@@ -92,32 +94,43 @@ $perfil = $result->fetch_assoc();
 
 <section class="perfilSolicitante">
     <h2>Creación de Perfil Solicitante</h2>
-    <div class="dropdown">
-        <button class="dropbtn">Editar Perfil</button>
-        <div class="dropdown-content">
-            <form id="perfilForm" method="POST" action="ModSolicitantes.php" enctype="multipart/form-data">
-                <label for="nombre">Nombre Completo</label><br>
-                <input type="text" name="nombre" id="nombre" value="<?php echo htmlspecialchars($perfil['Nombre']); ?>" placeholder="Ingresa tu nombre completo" required><br>
-                <label for="correo">Correo Electrónico</label><br>
-                <input type="email" name="correo" id="correo" value="<?php echo htmlspecialchars($perfil['Email']); ?>" placeholder="Ingresa tu correo electrónico" required><br>
-                <label for="telefono">Teléfono</label><br>
-                <input type="tel" name="telefono" id="telefono" value="<?php echo htmlspecialchars($perfil['Telefono']); ?>" placeholder="Ingresa tu teléfono" required><br>
-                <label for="educacion">Educación</label><br>
-                <input type="text" name="educacion" id="educacion" value="<?php echo htmlspecialchars($perfil['Educacion']); ?>" placeholder="Ingresa tu nivel de educación" required><br>
-                <label for="descripcion">Habilidades</label><br>
-                <textarea name="descripcion" id="descripcion" rows="4" cols="50" placeholder="Ingresa tus habilidades" required><?php echo htmlspecialchars($perfil['Habilidades']); ?></textarea><br>
-                <label for="cv">Adjuntar CV (PDF, DOCX)</label><br>
-                <input type="file" name="cv" id="cv" accept=".pdf,.docx"><br>
+    <div class="perfil-form-container">
+        <form id="perfilForm" method="POST" action="ModSolicitantes.php" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="nombre">Nombre Completo</label>
+                <input type="text" name="nombre" id="nombre" value="<?php echo htmlspecialchars($perfil['Nombre']); ?>" placeholder="Ingresa tu nombre completo" required>
+            </div>
+            <div class="form-group">
+                <label for="correo">Correo Electrónico</label>
+                <input type="email" name="correo" id="correo" value="<?php echo htmlspecialchars($perfil['Email']); ?>" placeholder="Ingresa tu correo electrónico" required>
+            </div>
+            <div class="form-group">
+                <label for="telefono">Teléfono</label>
+                <input type="tel" name="telefono" id="telefono" value="<?php echo htmlspecialchars($perfil['Telefono']); ?>" placeholder="Ingresa tu teléfono" required>
+            </div>
+            <div class="form-group">
+                <label for="educacion">Educación</label>
+                <input type="text" name="educacion" id="educacion" value="<?php echo htmlspecialchars($perfil['Educacion']); ?>" placeholder="Ingresa tu nivel de educación" required>
+            </div>
+            <div class="form-group">
+                <label for="descripcion">Habilidades</label>
+                <textarea name="descripcion" id="descripcion" rows="4" placeholder="Ingresa tus habilidades" required><?php echo htmlspecialchars($perfil['Habilidades']); ?></textarea>
+            </div>
+            <div class="form-group">
+                <label for="cv">Adjuntar CV (PDF, DOCX)</label>
+                <input type="file" name="cv" id="cv" accept=".pdf,.docx">
                 <?php if ($perfil['CV_URL']): ?>
                     <p>CV Actual: <a href="<?php echo $perfil['CV_URL']; ?>" target="_blank">Ver CV</a></p>
                 <?php endif; ?>
-                
+            </div>
+            <div class="form-actions">
                 <button type="submit" name="action" value="update">Actualizar Perfil</button>
-                <button type="button" name="action" value="delete" onclick="confirmDelete()">Borrar Perfil</button><br>
-            </form>
-        </div>
+                <button type="button" name="action" value="delete" onclick="confirmDelete()">Borrar Perfil</button>
+            </div>
+        </form>
     </div>
 </section>
+
 
 <script>
     
@@ -144,20 +157,52 @@ $perfil = $result->fetch_assoc();
 </script>
 
 
+<section class="postulaciones">
+    <h2>Postulaciones</h2>
+    <p>En este apartado podrás ver los puestos a los que has aplicado y su estado.</p>
 
-        <section class="postulaciones">
-            <h2>Postulaciones</h2>
-            <div class="dropdown">
-                <button class="dropbtn">Ver Postulaciones</button>
-                <div class="dropdown-content">
-                    <p>En este apartado podrás ver los puestos a los que has aplicado y su estado.</p>
-                    <ul>
-                        <li>Puesto: Desarrollador Web - Estado: En revisión</li>
-                        <li>Puesto: Diseñador Gráfico - Estado: Postulación rechazada</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
+    <?php
+
+    $sql_postulaciones = "
+        SELECT O.Titulo AS Oferta, A.FechaAplicacion, A.EstadoAplicacion
+        FROM Aplicaciones A
+        INNER JOIN Ofertas_Empleo O ON A.ID_Oferta = O.ID_Oferta
+        WHERE A.ID_PerfilJunior = (SELECT ID_PerfilJunior FROM Perfil_Junior WHERE ID_Usuario = ?)
+        ORDER BY A.FechaAplicacion DESC
+    ";
+
+    $stmt_postulaciones = $conn->prepare($sql_postulaciones);
+    $stmt_postulaciones->bind_param("i", $user_id); 
+    $stmt_postulaciones->execute();
+    $result_postulaciones = $stmt_postulaciones->get_result();
+
+    if ($result_postulaciones->num_rows > 0) {
+        echo "<table>
+                <thead>
+                    <tr>
+                        <th>Título de la Oferta</th>
+                        <th>Fecha de Aplicación</th>
+                        <th>Estado de la Aplicación</th>
+                    </tr>
+                </thead>
+                <tbody>";
+        while ($row = $result_postulaciones->fetch_assoc()) {
+            echo "<tr>
+                    <td>{$row['Oferta']}</td>
+                    <td>{$row['FechaAplicacion']}</td>
+                    <td>{$row['EstadoAplicacion']}</td>
+                  </tr>";
+        }
+        echo "</tbody></table>";
+    } else {
+        echo "<p>No tienes postulaciones registradas.</p>";
+    }
+
+    ?>
+</section>
+
+
+
 
         <section class="estadisticas">
             <h2>Seguimiento de Estadísticas</h2>
