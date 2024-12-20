@@ -1,31 +1,6 @@
 <?php
 session_start();
 
-<<<<<<< Updated upstream
-if(!empty($_SESSION)){
-   if($_SESSION["user_type"] == "Junior"){
-    $menu = [
-        ["label" => "Inicio", "url" => "index.php"],
-        ["url" => "sobreNosotros.php", "label" => "Sobre Nosotros"],
-        ["url" => "BusquedaEmpleo.php", "label" => "Buscar Empleo"],
-        ["url" => "ModSolicitantes.php", "label" => "Perfil"],
-        ["url" => "logout.php", "label" => "Salir", "button" => true]
-    ];
-   } else if($_SESSION["user_type"] == "Empleador"){
-    $menu = [
-        ["label" => "Inicio", "url" => "index.php"],
-        ["url" => "sobreNosotros.php", "label" => "Sobre Nosotros"],
-        ["url" => "ModEmpleados.php", "label" => "Modulo Empleador"],
-        ["url" => "logout.php", "label" => "Salir", "button" => true]
-    ];
-   } 
-} else {
-    $menu = [
-        ["label" => "Inicio", "url" => "index.php"],
-        ["url" => "sobreNosotros.php", "label" => "Sobre Nosotros"],
-        ["label" => "Autenticarse", "url" => "Autenticarse.php"],
-    ];
-=======
 // Inicializar menú predeterminado
 $menu = [
     ["label" => "Inicio", "url" => "index.php"],
@@ -51,7 +26,7 @@ if (!empty($_SESSION) && isset($_SESSION["user_type"])) {
             ["url" => "logout.php", "label" => "Salir", "button" => true]
         ];
     }
->>>>>>> Stashed changes
+
 }
 ?>
 
